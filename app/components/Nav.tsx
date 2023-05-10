@@ -7,12 +7,12 @@ import { authOptions } from "../../pages/api/auth/[...nextauth]"
 export default async function Nav() {
     const session = await getServerSession(authOptions);
     return (
-        <nav className="flex py-6 px-6 lg:px-16 justify-between bg-blue-200">
+        <nav className="flex py-6 px-6 lg:px-16 justify-between border-b border-black">
             <div className="flex gap-8">
-                <Link className="py-2 px-4 font-bold hover:text-teal-500 active:text-teal-300" href={"/"}>
+                <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/"}>
                     Home
                 </Link>
-                <Link className="py-2 px-4 font-bold hover:text-teal-500 active:text-teal-300" href={"/about"}>
+                <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/about"}>
                     About
                 </Link>
             </div>
