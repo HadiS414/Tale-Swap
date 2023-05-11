@@ -38,7 +38,7 @@ export default function CreatePost() {
     return (
         <>
             {contextHolder}
-            <form onSubmit={submitPost} className="bg-white my-8 mx-8 p-8 rounded-md">
+            <form onSubmit={submitPost} className="bg-white m-8 p-8 rounded-md">
                 <div className="flex flex-col my-4">
                     <textarea
                         name="content"
