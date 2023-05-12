@@ -1,6 +1,6 @@
-export type MyPostType = {
-    email: string
+export type MyPostsType = {
     id: string
+    email: string
     image: string
     name: string
     posts: {

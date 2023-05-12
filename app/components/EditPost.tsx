@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import DeletePostModal from "./DeletePostModal";
+import Link from "next/link";
 
 type EditProps = {
     id: string
@@ -36,7 +37,9 @@ export default function EditPost({ id, avatar, name, title, content, comments }:
                 <p className="break-all"> {content} </p>
             </div>
             <div className="flex gap-4 items-center">
-                <p className="text-sm font-bold text-gray-700"> {comments?.length} Comments </p>
+                <Link href={`/post/${id}`}>
+                    <p className="text-sm font-bold text-gray-700"> {comments?.length} Comments </p>
+                </Link>
                 <button className="text-sm font-bold text-red-500" onClick={() => setShowModal(true)}>
                     Delete
                 </button>

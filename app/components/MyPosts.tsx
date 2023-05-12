@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { MyPostType } from "../types/MyPost";
+import { MyPostsType } from "../types/MyPosts";
 import EditPost from "./EditPost";
 
 const fetchMyPosts = async () => {
@@ -11,7 +11,7 @@ const fetchMyPosts = async () => {
 }
 
 export default function MyPosts() {
-    const { data, isLoading } = useQuery<MyPostType>({
+    const { data, isLoading } = useQuery<MyPostsType>({
         queryFn: fetchMyPosts,
         queryKey: ["my-posts"]
     })

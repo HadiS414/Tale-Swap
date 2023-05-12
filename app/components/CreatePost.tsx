@@ -52,7 +52,7 @@ export default function CreatePost() {
                     />
                 </div>
                 <div className="flex items-center justify-between gap-2">
-                    <p className={`font-bold text-sm ${content.length <= 300 ? "text-gray-700" : "text-red-700"}`}>{`${content.length} / 300`}</p>
+                    <p className={`font-bold text-sm ${content.length <= 300 ? "text-gray-700" : "text-red-700"}`}> {`${content.length} / 300`} </p>
                     <button
                         disabled={isDisabled}
                         className="bg-teal-600 text-white font-medium py-2 px-6 rounded-xl hover:bg-teal-500 active:bg-teal-300 disabled:opacity-25"
