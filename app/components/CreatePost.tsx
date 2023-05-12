@@ -10,16 +10,19 @@ export default function CreatePost() {
     const [content, setContent] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
+    const queryClient = useQueryClient();
 
     const { mutate } = useMutation(
         async (content: string) => await axios.post("/api/posts/createPost", { content }),
         {
             onSuccess: (data) => {
+                queryClient.invalidateQueries(["posts"]);
                 setContent("");
                 setIsDisabled(false);
-                messageApi.open({ type: "success", content: "Post has been made!", key: "creatPost" })
+                messageApi.open({ type: "success", content: "Post has been made!", key: "createPost" })
             },
             onError: (error) => {
+                queryClient.invalidateQueries(["posts"]);
                 setIsDisabled(false);
                 if (error instanceof AxiosError) {
                     messageApi.open({ type: "error", content: error?.response?.data.message, key: "createPost" })
