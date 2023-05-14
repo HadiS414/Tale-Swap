@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
-import prisma from "../../../prisma/client";
+import { authOptions } from "../../auth/[...nextauth]";
+import prisma from "../../../../prisma/client";
 
 export default async function handler(
     req: NextApiRequest,
@@ -14,9 +14,8 @@ export default async function handler(
         }
 
         try {
-            const postId = req.body;
-            console.log("OVER HERE", req.query);
-            const result = prisma.post.delete({
+            const postId = req.query.id as string;
+            const result = await prisma.post.delete({
                 where: {
                     id: postId
                 }
