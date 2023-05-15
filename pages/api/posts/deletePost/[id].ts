@@ -20,7 +20,7 @@ export default async function handler(
                     id: postId
                 }
             });
-            res.status(200).json(result)
+            return res.status(200).json(result)
         } catch (error) {
             console.error(error);
             return res.status(403).json({ error: "Error while deleting your post" })
