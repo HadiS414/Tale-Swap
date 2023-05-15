@@ -5,7 +5,7 @@ import { useState } from "react";
 import DeletePostModal from "./DeletePostModal";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 type EditProps = {
     id: string
@@ -39,7 +39,6 @@ export default function EditPost({ id, avatar, name, title, content, comments }:
 
     const submitEditPost = async () => {
         mutate();
-        console.log("asdsada")
     }
 
     return (
