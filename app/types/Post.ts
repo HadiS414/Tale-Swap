@@ -10,9 +10,20 @@ export type PostType = {
         email: string
         image: string
     }
-    comments: {
-        createdAt: string
+    likes: {
         id: string
+        postId: string
+        userId: string
+        user: {
+            id: string
+            name: string
+            email: string
+            image: string
+        }
+    }[]
+    comments: {
+        id: string
+        createdAt: string
         postId: string
         userId: string
         content: string

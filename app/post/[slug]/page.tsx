@@ -56,6 +56,7 @@ export default function PostDetails(url: URL) {
                     avatar={data.user.image}
                     content={data.content}
                     comments={data.comments}
+                    likes={data.likes}
                 />
             }
             <AddComment id={data?.id} />

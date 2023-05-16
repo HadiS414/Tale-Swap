@@ -28,7 +28,8 @@ export default async function handler(
                 data: {
                     title: "Placeholder Title",
                     content: content,
-                    userId: currentSessionUser?.id
+                    userId: currentSessionUser?.id,
+                    likes: []
                 } as Prisma.PostUncheckedCreateInput
             })
             return res.status(200).json(result);

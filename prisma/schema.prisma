@@ -19,6 +19,7 @@ model Post {
   userId    String
   user      User      @relation(fields: [userId], references: [id])
   comments  Comment[]
+  likes     Like[]
 }
 
 model Comment {
@@ -28,7 +29,15 @@ model Comment {
   userId    String
   createdAt DateTime @default(now())
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id     String @id @default(cuid())
+  postId String
+  userId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -41,6 +50,7 @@ model User {
   sessions      Session[]
   posts         Post[]
   comments      Comment[]
+  likes         Like[]
 }
 
 model Account {

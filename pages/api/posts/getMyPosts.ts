@@ -24,7 +24,8 @@ export default async function handler(
                             createdAt: "desc"
                         },
                         include: {
-                            comments: true
+                            comments: true,
+                            likes: true
                         }
                     },
                 }

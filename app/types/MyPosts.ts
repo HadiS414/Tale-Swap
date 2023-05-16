@@ -8,12 +8,23 @@ export type MyPostsType = {
         id: string
         content: string
         title: string
-        comments?: {
-            createdAt: string
+        likes: {
             id: string
+            postId: string
+            userId: string
+            user: {
+                id: string
+                name: string
+                email: string
+                image: string
+            }
+        }[]
+        comments: {
+            id: string
+            createdAt: string
             content: string
             postId: string
-            userId:string
+            userId: string
         }[]
     }[]
 }

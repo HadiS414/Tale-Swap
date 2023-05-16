@@ -1,40 +1,20 @@
-"use client"
+import AllPosts from "./components/AllPosts";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import prisma from "../prisma/client"
 
-import CreatePost from "./components/CreatePost"
-import Post from "./components/Post";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { PostType } from "./types/Post";
-
-const fetchPosts = async () => {
-  const res = await axios.get("/api/posts/getPosts");
-  return res.data;
-}
-
-export default function Home() {
-  const { data, error, isLoading } = useQuery<PostType[]>({
-    queryFn: fetchPosts,
-    queryKey: ["posts"]
-  })
-  if (error) {
-    return error;
-  }
-  if (isLoading) {
-    return "Loading...";
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  let currentSessionUser;
+  if (session) {
+    currentSessionUser = await prisma.user.findUnique({
+      where: { email: session?.user?.email || undefined }
+    });
   }
 
   return (
     <div>
-      <CreatePost />
-      {data?.map((post) => (
-        <Post
-          id={post.id}
-          name={post.user.name}
-          avatar={post.user.image}
-          content={post.content}
-          comments={post.comments}
-        />
-      ))}
-    </div>
+      <AllPosts sessionUserId={currentSessionUser?.id} />
+    </div >
   )
 }
