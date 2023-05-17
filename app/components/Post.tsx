@@ -3,32 +3,41 @@
 import { LikeFilled, LikeOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { SessionUser } from "../types/SessionUser";
 
 type PostProps = {
     id: string,
     name: string,
     avatar: string,
     content: string,
-    sessionUserId?: string,
+    creatorId: string
     likes: {
         id: string
         postId: string
         userId: string
     }[],
-    comments?: {
+    comments: {
         id: string
-        createdAt: string
-        postId: string
-        userId: string
     }[]
 }
 
-export default function Post({ id, name, avatar, content, comments, likes, sessionUserId }: PostProps) {
+const fetchSessionUser = async () => {
+    const res = await axios.get("/api/auth/getSessionUser");
+    return res.data;
+}
+
+export default function Post({ id, name, avatar, content, comments, likes, creatorId }: PostProps) {
     const queryClient = useQueryClient();
+    const { data } = useQuery<SessionUser>({
+        queryFn: fetchSessionUser,
+        queryKey: ["sessionUser"]
+    });
+    const sessionUser = { ...data }
+
     const { mutate } = useMutation(
-        async () => await axios.post("/api/posts/likePost", { postId: id }),
+        async (type: string) => type === "like" ? await axios.post("/api/posts/likePost", { postId: id }) : await axios.post("/api/posts/followUser", { id: creatorId }),
         {
             onSuccess: (data) => {
                 queryClient.invalidateQueries(["posts"]);
@@ -39,7 +48,8 @@ export default function Post({ id, name, avatar, content, comments, likes, sessi
         }
     )
 
-    const like = likes.find((like) => like.userId === sessionUserId);
+    const postLikedBySessionUser = likes.find((like) => like.userId === sessionUser.id);
+    const userFollowedBySessionUser = sessionUser.following?.find((followedUser) => followedUser.followingId === creatorId);
 
     return (
         <div className="bg-white m-8 p-8 rounded-lg">
@@ -52,6 +62,16 @@ export default function Post({ id, name, avatar, content, comments, likes, sessi
                     alt="Avatar..."
                 />
                 <h3 className="font-bold text-gray-700"> {name} </h3>
+                <button
+                    className="bg-teal-600 text-white py-1 px-4 ml-2 rounded-md hover:bg-teal-500 active:bg-teal-300"
+                    onClick={() => mutate("follow")}
+                >
+                    {userFollowedBySessionUser ?
+                        <p> Unfollow </p>
+                        :
+                        <p> Follow </p>
+                    }
+                </button>
             </div>
             <div className="my-8">
                 <p className="break-all"> {content} </p>
@@ -61,8 +81,8 @@ export default function Post({ id, name, avatar, content, comments, likes, sessi
                     <p className="text-sm font-bold text-gray-700 cursor-pointer"> {comments?.length} Comments </p>
                 </Link>
                 <div className="flex gap-1">
-                    <button onClick={() => mutate()}>
-                        {like ?
+                    <button onClick={() => mutate("like")}>
+                        {postLikedBySessionUser ?
                             <LikeFilled className="text-green-500 text-lg" />
                             :
                             <LikeOutlined className="text-green-500 text-lg" />

@@ -22,6 +22,7 @@ export default async function handler(
                             user: true
                         }
                     },
+                    likes: true
                 }
             })
             return res.status(200).json(data);
