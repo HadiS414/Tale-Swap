@@ -14,10 +14,10 @@ export default async function handler(
             return res.status(401).json({ message: "Please sign in to follow/unfollow a user" })
         }
 
+        const userToBeFollowedId = req.body.id;
         const currentSessionUser = await prisma.user.findUnique({
             where: { email: session?.user?.email || undefined }
         });
-        const userToBeFollowedId = req.body.id;
 
         if (currentSessionUser?.id === userToBeFollowedId) {
             return res.status(401).json({ message: "You cannot follow yourself" })

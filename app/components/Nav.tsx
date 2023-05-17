@@ -13,9 +13,14 @@ export default async function Nav() {
                     Home
                 </Link>
                 {session &&
-                    <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/myPosts"}>
-                        My Posts
-                    </Link>
+                    <>
+                        <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/myPosts"}>
+                            My Posts
+                        </Link>
+                        <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/following"}>
+                            Following
+                        </Link>
+                    </>
                 }
             </div>
             <div>

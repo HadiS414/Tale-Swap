@@ -41,9 +41,13 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
         {
             onSuccess: (data) => {
                 queryClient.invalidateQueries(["posts"]);
+                queryClient.invalidateQueries(["sessionUser"]);
+                queryClient.invalidateQueries(["following-posts"]);
             },
             onError: (error) => {
                 queryClient.invalidateQueries(["posts"]);
+                queryClient.invalidateQueries(["sessionUser"]);
+                queryClient.invalidateQueries(["following-posts"]);
             }
         }
     )
@@ -62,16 +66,18 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
                     alt="Avatar..."
                 />
                 <h3 className="font-bold text-gray-700"> {name} </h3>
-                <button
-                    className="bg-teal-600 text-white py-1 px-4 ml-2 rounded-md hover:bg-teal-500 active:bg-teal-300"
-                    onClick={() => mutate("follow")}
-                >
-                    {userFollowedBySessionUser ?
-                        <p> Unfollow </p>
-                        :
-                        <p> Follow </p>
-                    }
-                </button>
+                {creatorId !== sessionUser.id &&
+                    <button
+                        className="bg-teal-600 text-white py-1 px-4 ml-2 rounded-md hover:bg-teal-500 active:bg-teal-300"
+                        onClick={() => mutate("follow")}
+                    >
+                        {userFollowedBySessionUser ?
+                            <p> Unfollow </p>
+                            :
+                            <p> Follow </p>
+                        }
+                    </button>
+                }
             </div>
             <div className="my-8">
                 <p className="break-all"> {content} </p>
