@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { SessionUser } from "../types/SessionUser";
+import { useState } from "react";
+import CommentModal from "./CommentModal";
 
 type PostProps = {
     id: string,
@@ -19,7 +21,17 @@ type PostProps = {
         userId: string
     }[],
     comments: {
-        id: string
+        id: string;
+        createdAt: string;
+        postId: string;
+        userId: string;
+        content: string;
+        user: {
+            id: string;
+            name: string;
+            email: string;
+            image: string;
+        };
     }[]
 }
 
@@ -29,6 +41,7 @@ const fetchSessionUser = async () => {
 }
 
 export default function Post({ id, name, avatar, content, comments, likes, creatorId }: PostProps) {
+    const [showModal, setShowModal] = useState(false);
     const queryClient = useQueryClient();
     const { data } = useQuery<SessionUser>({
         queryFn: fetchSessionUser,
@@ -83,9 +96,9 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
                 <p className="break-all"> {content} </p>
             </div>
             <div className="flex gap-4 items-center">
-                <Link href={`/post/${id}`}>
+                <button onClick={() => setShowModal(true)}>
                     <p className="text-sm font-bold text-gray-700 cursor-pointer"> {comments?.length} Comments </p>
-                </Link>
+                </button>
                 <div className="flex gap-1">
                     <button onClick={() => mutate("like")}>
                         {postLikedBySessionUser ?
@@ -97,6 +110,18 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
                     {likes.length}
                 </div>
             </div>
+            <CommentModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                id={id}
+                name={name}
+                avatar={avatar}
+                content={content}
+                comments={comments}
+                likes={likes}
+                creatorId={creatorId}
+                sessionUserId={sessionUser.id as string}
+            />
         </div>
     )
 }

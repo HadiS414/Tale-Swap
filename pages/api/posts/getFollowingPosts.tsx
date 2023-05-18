@@ -32,7 +32,11 @@ export default async function handler(
                 },
                 include: {
                     user: true,
-                    comments: true,
+                    comments: {
+                        include: {
+                            user: true
+                        }
+                    },
                     likes: true
                 },
                 orderBy: {

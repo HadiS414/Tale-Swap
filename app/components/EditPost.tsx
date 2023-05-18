@@ -4,9 +4,11 @@ import Image from "next/image";
 import { useState } from "react";
 import DeletePostModal from "./DeletePostModal";
 import Link from "next/link";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { LikeFilled } from "@ant-design/icons";
+import CommentModal from "./CommentModal";
+import { SessionUser } from "../types/SessionUser";
 
 type EditProps = {
     id: string
@@ -14,11 +16,19 @@ type EditProps = {
     name: string
     title: string
     content: string
-    comments?: {
-        id: string
-        postId: string
-        userId: string
-    }[],
+    comments: {
+        id: string;
+        createdAt: string;
+        postId: string;
+        userId: string;
+        content: string;
+        user: {
+            id: string;
+            name: string;
+            email: string;
+            image: string;
+        };
+    }[]
     likes: {
         id: string
         postId: string
@@ -26,10 +36,21 @@ type EditProps = {
     }[]
 }
 
+const fetchSessionUser = async () => {
+    const res = await axios.get("/api/auth/getSessionUser");
+    return res.data;
+}
+
 export default function EditPost({ id, avatar, name, title, content, comments, likes }: EditProps) {
-    const [showModal, setShowModal] = useState(false);
+    const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+    const [showCommentModal, setShowCommentModal] = useState(false);
     const [editedContent, setEditedContent] = useState(content);
     const queryClient = useQueryClient();
+    const { data } = useQuery<SessionUser>({
+        queryFn: fetchSessionUser,
+        queryKey: ["sessionUser"]
+    });
+    const sessionUser = { ...data }
 
     const { mutate } = useMutation(
         async () => await axios.patch("/api/posts/editPost", { postId: id, content: editedContent }),
@@ -66,10 +87,10 @@ export default function EditPost({ id, avatar, name, title, content, comments, l
             </div>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <Link href={`/post/${id}`}>
-                        <p className="text-sm font-bold text-gray-700"> {comments?.length} Comments </p>
-                    </Link>
-                    <button className="text-sm font-bold text-red-500" onClick={() => setShowModal(true)}>
+                    <button onClick={() => setShowCommentModal(true)}>
+                        <p className="text-sm font-bold text-gray-700 cursor-pointer"> {comments?.length} Comments </p>
+                    </button>
+                    <button className="text-sm font-bold text-red-500" onClick={() => setShowDeletePostModal(true)}>
                         Delete
                     </button>
                     <div className="flex gap-1">
@@ -86,7 +107,23 @@ export default function EditPost({ id, avatar, name, title, content, comments, l
                     </button>
                 </div>
             </div>
-            <DeletePostModal showModal={showModal} setShowModal={setShowModal} postId={id} />
+            <DeletePostModal
+                showModal={showDeletePostModal}
+                setShowModal={setShowDeletePostModal}
+                postId={id}
+            />
+            <CommentModal
+                showModal={showCommentModal}
+                setShowModal={setShowCommentModal}
+                id={id}
+                name={name}
+                avatar={avatar}
+                content={content}
+                comments={comments}
+                likes={likes}
+                creatorId={sessionUser.id as string}
+                sessionUserId={sessionUser.id as string}
+            />
         </div>
     )
 }

@@ -24,13 +24,17 @@ export default function AddComment({ id }: PostProps) {
         async (data: Comment) => axios.post("/api/posts/addComment", { data }),
         {
             onSuccess: (data) => {
-                queryClient.invalidateQueries(["detail-post"]);
+                queryClient.invalidateQueries(["posts"]);
+                queryClient.invalidateQueries(["my-posts"]);
+                queryClient.invalidateQueries(["following-posts"]);
                 setIsDisabled(false);
                 setContent("");
                 messageApi.open({ type: "success", content: "Comment has been added!", key: "addComment" })
             },
             onError: (error) => {
-                queryClient.invalidateQueries(["detail-post"]);
+                queryClient.invalidateQueries(["posts"]);
+                queryClient.invalidateQueries(["my-posts"]);
+                queryClient.invalidateQueries(["following-posts"]);
                 setIsDisabled(false);
                 if (error instanceof AxiosError) {
                     messageApi.open({ type: "error", content: error?.response?.data.message, key: "addComment" })
@@ -50,17 +54,17 @@ export default function AddComment({ id }: PostProps) {
         <>
             {contextHolder}
             <form className="m-8" onSubmit={submitComment}>
-                <h3> Add a comment </h3>
                 <div className="flex flex-col my-2">
                     <input
                         onChange={(e) => setContent(e.target.value)}
                         value={content}
                         type="text"
                         name="content"
-                        className="p-4 text-lg rounded-md my-2"
+                        className="p-4 rounded-md my-2"
                     />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex justify-between items-center">
+                    <p className={`font-bold text-sm ${content.length <= 300 ? "text-gray-700" : "text-red-700"}`}> {`${content.length} / 300`} </p>
                     <button
                         disabled={isDisabled}
                         className="bg-teal-600 text-white font-medium py-2 px-6 rounded-xl hover:bg-teal-500 active:bg-teal-300 disabled:opacity-25"
@@ -68,7 +72,6 @@ export default function AddComment({ id }: PostProps) {
                     >
                         Add Comment
                     </button>
-                    <p className={`font-bold text-sm ${content.length <= 300 ? "text-gray-700" : "text-red-700"}`}> {`${content.length} / 300`} </p>
                 </div>
             </form>
         </>

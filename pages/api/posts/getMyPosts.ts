@@ -24,7 +24,11 @@ export default async function handler(
                             createdAt: "desc"
                         },
                         include: {
-                            comments: true,
+                            comments: {
+                                include: {
+                                    user: true
+                                }
+                            },
                             likes: true
                         }
                     },
