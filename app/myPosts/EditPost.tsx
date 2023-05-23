@@ -3,11 +3,10 @@
 import Image from "next/image";
 import { useState } from "react";
 import DeletePostModal from "./DeletePostModal";
-import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { LikeFilled } from "@ant-design/icons";
-import CommentModal from "./CommentModal";
+import CommentModal from "../components/CommentModal";
 import { SessionUser } from "../types/SessionUser";
 
 type EditProps = {

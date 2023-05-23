@@ -50,7 +50,7 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
     const sessionUser = { ...data }
 
     const { mutate } = useMutation(
-        async (type: string) => type === "like" ? await axios.post("/api/posts/likePost", { postId: id }) : await axios.post("/api/posts/followUser", { id: creatorId }),
+        async (type: string) => type === "like" ? await axios.post("/api/posts/likePost", { postId: id }) : await axios.post("/api/auth/followUser", { id: creatorId }),
         {
             onSuccess: (data) => {
                 queryClient.invalidateQueries(["posts"]);

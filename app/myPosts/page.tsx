@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
-import MyPosts from "../components/MyPosts";
+import MyPosts from "./MyPosts";
 
 export default async function MyPostsPage() {
     const session = await getServerSession(authOptions);

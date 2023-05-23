@@ -6,8 +6,8 @@ import { MyPostsType } from "../types/MyPosts";
 import EditPost from "./EditPost";
 
 const fetchMyPosts = async () => {
-    const response = await axios.get("/api/posts/getMyPosts");
-    return response.data;
+    const res = await axios.get("/api/posts/getMyPosts");
+    return res.data;
 }
 
 export default function MyPosts() {
@@ -15,11 +15,13 @@ export default function MyPosts() {
         queryFn: fetchMyPosts,
         queryKey: ["my-posts"]
     })
-    if (isLoading) return <h1> Loading... </h1>
+    if (isLoading) {
+        return <h1> Loading... </h1>
+    }
 
     return (
         <div>
-            {data?.posts?.map((post) => (
+            {data?.posts.map((post) => (
                 <EditPost
                     id={post.id}
                     avatar={data.image}
