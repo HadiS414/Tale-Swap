@@ -47,11 +47,13 @@ export default function CommentModal({ showModal, setShowModal, id, name, avatar
                 queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["my-posts"]);
                 queryClient.invalidateQueries(["following-posts"]);
+                queryClient.invalidateQueries(["genre-posts"]);
             },
             onError: (error) => {
                 queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["my-posts"]);
                 queryClient.invalidateQueries(["following-posts"]);
+                queryClient.invalidateQueries(["genre-posts"]);
             }
         }
     )

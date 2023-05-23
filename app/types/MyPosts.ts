@@ -6,8 +6,9 @@ export type MyPostsType = {
     posts: {
         createdAt: string
         id: string
-        content: string
         title: string
+        content: string
+        genre: string
         likes: {
             id: string
             postId: string
@@ -25,6 +26,12 @@ export type MyPostsType = {
             content: string
             postId: string
             userId: string
+            user: {
+                id: string;
+                name: string;
+                email: string;
+                image: string;
+            };
         }[]
     }[]
 }

@@ -3,6 +3,7 @@ export type PostType = {
     title: string
     content: string
     createdAt: string
+    genre: string
     updatedAt?: string
     user: {
         id: string

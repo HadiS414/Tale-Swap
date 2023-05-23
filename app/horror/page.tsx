@@ -2,18 +2,18 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Post from "../components/Post";
 import { PostType } from "../types/Post";
+import Post from "../components/Post";
 
-const fetchFollowingPosts = async () => {
-    const res = await axios.get("/api/posts/getFollowingPosts");
+const fetchHorrorPosts = async () => {
+    const res = await axios.get("/api/posts/getGenrePosts/horror");
     return res.data;
 }
 
-export default function FollowingPage() {
+export default function HorrorPage() {
     const { data, isLoading } = useQuery<PostType[]>({
-        queryFn: fetchFollowingPosts,
-        queryKey: ["following-posts"]
+        queryFn: fetchHorrorPosts,
+        queryKey: ["genre-posts"]
     })
     if (isLoading) {
         return <h1> Loading... </h1>

@@ -15,6 +15,7 @@ export default async function handler(
         }
 
         const content: string = req.body.content;
+        const genre: string = req.body.genre;
         const currentSessionUser = await prisma.user.findUnique({
             where: { email: session?.user?.email || undefined }
         });
@@ -23,11 +24,16 @@ export default async function handler(
             return res.status(400).json({ message: "Please do not leave this empty" })
         }
 
+        if (!genre.length) {
+            return res.status(400).json({ message: "Please pick a genre" })
+        }
+
         try {
             const result = await prisma.post.create({
                 data: {
                     title: "Placeholder Title",
                     content: content,
+                    genre: genre,
                     userId: currentSessionUser?.id
                 } as Prisma.PostUncheckedCreateInput
             })

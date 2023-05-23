@@ -2,18 +2,18 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Post from "../components/Post";
 import { PostType } from "../types/Post";
+import Post from "../components/Post";
 
-const fetchFollowingPosts = async () => {
-    const res = await axios.get("/api/posts/getFollowingPosts");
+const fetchMiscPosts = async () => {
+    const res = await axios.get("/api/posts/getGenrePosts/misc");
     return res.data;
 }
 
-export default function FollowingPage() {
+export default function MiscPage() {
     const { data, isLoading } = useQuery<PostType[]>({
-        queryFn: fetchFollowingPosts,
-        queryKey: ["following-posts"]
+        queryFn: fetchMiscPosts,
+        queryKey: ["genre-posts"]
     })
     if (isLoading) {
         return <h1> Loading... </h1>

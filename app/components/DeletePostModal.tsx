@@ -17,13 +17,13 @@ export default function DeletePostModal({ showModal, setShowModal, postId }: Del
         async (id: string) => await axios.delete(`api/posts/deletePost/${id}`),
         {
             onSuccess: (data) => {
-                setShowModal(false);
                 queryClient.invalidateQueries(["my-posts"]);
+                setShowModal(false);
                 messageApi.open({ type: "success", content: "Post has been deleted!", key: "deletePost" })
             },
             onError: (error) => {
-                setShowModal(false);
                 queryClient.invalidateQueries(["my-posts"]);
+                setShowModal(false);
                 if (error instanceof AxiosError) {
                     messageApi.open({ type: "error", content: error?.response?.data.message, key: "deletePost" })
                 }
@@ -41,7 +41,13 @@ export default function DeletePostModal({ showModal, setShowModal, postId }: Del
     return (
         <>
             {contextHolder}
-            <Modal title="Delete Post" open={showModal} onOk={handleOk} onCancel={handleCancel} >
+            <Modal
+                title="Delete Post"
+                open={showModal}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                okButtonProps={{className: "bg-blue-500"}}
+            >
                 <p> Are you sure want to delete your post? </p>
             </Modal>
         </>

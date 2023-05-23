@@ -27,6 +27,7 @@ export default function AddComment({ id }: PostProps) {
                 queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["my-posts"]);
                 queryClient.invalidateQueries(["following-posts"]);
+                queryClient.invalidateQueries(["genre-posts"]);
                 setIsDisabled(false);
                 setContent("");
                 messageApi.open({ type: "success", content: "Comment has been added!", key: "addComment" })
@@ -35,6 +36,7 @@ export default function AddComment({ id }: PostProps) {
                 queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["my-posts"]);
                 queryClient.invalidateQueries(["following-posts"]);
+                queryClient.invalidateQueries(["genre-posts"]);
                 setIsDisabled(false);
                 if (error instanceof AxiosError) {
                     messageApi.open({ type: "error", content: error?.response?.data.message, key: "addComment" })

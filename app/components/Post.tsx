@@ -56,11 +56,13 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
                 queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["sessionUser"]);
                 queryClient.invalidateQueries(["following-posts"]);
+                queryClient.invalidateQueries(["genre-posts"]);
             },
             onError: (error) => {
                 queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["sessionUser"]);
                 queryClient.invalidateQueries(["following-posts"]);
+                queryClient.invalidateQueries(["genre-posts"]);
             }
         }
     )

@@ -7,6 +7,7 @@ export type SessionUser = {
         id: string
         content: string
         createdAt: string
+        genre: string
     }[]
     likes: {
         id: string

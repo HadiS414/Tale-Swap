@@ -27,7 +27,7 @@ type EditProps = {
             name: string;
             email: string;
             image: string;
-        };
+        }
     }[]
     likes: {
         id: string

@@ -16,6 +16,7 @@ model Post {
   updatedAt DateTime  @updatedAt
   title     String
   content   String
+  genre     String
   userId    String
   user      User      @relation(fields: [userId], references: [id])
   comments  Comment[]

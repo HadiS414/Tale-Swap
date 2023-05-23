@@ -3,6 +3,7 @@ import Login from "./Login";
 import LoggedIn from "./LoggedIn";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../pages/api/auth/[...nextauth]"
+import GenreNav from "./GenreNav";
 
 export default async function Nav() {
     const session = await getServerSession(authOptions);
@@ -22,6 +23,7 @@ export default async function Nav() {
                         </Link>
                     </>
                 }
+                <GenreNav />
             </div>
             <div>
                 {!session?.user && <Login />}
