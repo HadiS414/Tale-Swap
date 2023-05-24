@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeletePostModal from "./DeletePostModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -62,6 +62,10 @@ export default function EditPost({ id, avatar, name, title, content, comments, l
             }
         }
     )
+
+    useEffect(() => {
+        setEditedContent(content);
+    }, [content])
 
     return (
         <div className="bg-white m-8 p-8 rounded-lg">
