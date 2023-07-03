@@ -22,7 +22,9 @@ export default function Home() {
 
   return (
     <div>
-      <CreatePost />
+      <div className="hidden md:block">
+        <CreatePost />
+      </div>
       {data?.map((post) => (
         <Post
           id={post.id}

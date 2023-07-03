@@ -2,32 +2,24 @@ import Link from "next/link";
 import Login from "./Login";
 import LoggedIn from "./LoggedIn";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../pages/api/auth/[...nextauth]"
+import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import Image from "next/image";
+import mobile_logo from "../TS_mobile_logo.svg";
 import GenreNav from "./GenreNav";
 
 export default async function Nav() {
     const session = await getServerSession(authOptions);
     return (
-        <nav className="flex py-6 px-6 lg:px-16 justify-between border-b border-black">
+        <nav className="flex py-3 px-6 lg:px-16 justify-between bg-dark-orange">
             <div className="flex gap-8">
-                <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/"}>
-                    Home
-                </Link>
-                {session &&
-                    <>
-                        <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/myPosts"}>
-                            My Posts
-                        </Link>
-                        <Link className="py-2 px-4 font-bold text-teal-600 hover:text-teal-500 active:text-teal-300" href={"/following"}>
-                            Following
-                        </Link>
-                    </>
-                }
-                <GenreNav />
+                <Image
+                    src={mobile_logo}
+                    alt="Mobile logo..."
+                />
             </div>
             <div>
                 {!session?.user && <Login />}
-                {session?.user && <LoggedIn image={session.user?.image || ""} />}
+                {session?.user && <LoggedIn image={session.user?.image || ""} email={session.user.email || ""} />}
             </div>
         </nav>
     )
