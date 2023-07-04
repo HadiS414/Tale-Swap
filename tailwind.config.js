@@ -13,7 +13,8 @@ module.exports = {
       },
       fontFamily: {
         "arial": ["Arial"],
-        "montserrat": ["Montserrat"]
+        "montserrat": ["Montserrat"],
+        "verdana": ["Verdana"]
       }
     },
   },

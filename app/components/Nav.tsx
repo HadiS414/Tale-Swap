@@ -4,7 +4,7 @@ import LoggedIn from "./LoggedIn";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import Image from "next/image";
-import mobile_logo from "../TS_mobile_logo.svg";
+import mobileLogo from "../TS_mobile_logo.svg";
 import GenreNav from "./GenreNav";
 
 export default async function Nav() {
@@ -13,7 +13,7 @@ export default async function Nav() {
         <nav className="flex py-3 px-6 lg:px-16 justify-between bg-dark-orange">
             <div className="flex gap-8">
                 <Image
-                    src={mobile_logo}
+                    src={mobileLogo}
                     alt="Mobile logo..."
                 />
             </div>

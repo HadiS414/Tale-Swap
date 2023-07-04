@@ -1,18 +1,19 @@
 "use client"
 
-import { LikeFilled, LikeOutlined } from "@ant-design/icons";
+import { MessageOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { SessionUser } from "../types/SessionUser";
 import { useState } from "react";
-import CommentModal from "./CommentModal";
+import saveButton from "../Vector.svg";
 
 type PostProps = {
     id: string,
     name: string,
     avatar: string,
+    title: string,
     content: string,
     creatorId: string
     likes: {
@@ -40,8 +41,8 @@ const fetchSessionUser = async () => {
     return res.data;
 }
 
-export default function Post({ id, name, avatar, content, comments, likes, creatorId }: PostProps) {
-    const [showModal, setShowModal] = useState(false);
+export default function Post({ id, name, avatar, title, content, comments, likes, creatorId }: PostProps) {
+    const [seeMore, setSeeMore] = useState(false);
     const queryClient = useQueryClient();
     const { data } = useQuery<SessionUser>({
         queryFn: fetchSessionUser,
@@ -71,16 +72,18 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
     const userFollowedBySessionUser = sessionUser.following?.find((followedUser) => followedUser.followingId === creatorId);
 
     return (
-        <div className="bg-white m-8 p-8 rounded-lg">
+        <div className="m-6 border-b border-black">
             <div className="flex items-center gap-2">
                 <Image
-                    className="rounded-full"
-                    width={32}
-                    height={32}
-                    src={avatar}
-                    alt="Avatar..."
+                    width={24}
+                    height={24}
+                    src={saveButton}
+                    alt="Bookmark..."
                 />
-                <h3 className="font-bold text-gray-700"> {name} </h3>
+                <p className="underline font-medium text-lg">
+                    {title}
+                </p>
+                {/*
                 {creatorId !== sessionUser.id &&
                     <button
                         className="bg-teal-600 text-white py-1 px-4 ml-2 rounded-md hover:bg-teal-500 active:bg-teal-300"
@@ -92,38 +95,43 @@ export default function Post({ id, name, avatar, content, comments, likes, creat
                             <p> Follow </p>
                         }
                     </button>
-                }
+                } */}
             </div>
-            <div className="my-8">
-                <p className="break-all"> {content} </p>
+            <div>
+                By: {name}
             </div>
-            <div className="flex gap-4 items-center">
-                <button onClick={() => setShowModal(true)}>
-                    <p className="text-sm font-bold text-gray-700 cursor-pointer"> {comments?.length} Comments </p>
-                </button>
-                <div className="flex gap-1">
-                    <button onClick={() => mutate("like")}>
-                        {postLikedBySessionUser ?
-                            <LikeFilled className="text-green-500 text-lg" />
-                            :
-                            <LikeOutlined className="text-green-500 text-lg" />
-                        }
-                    </button>
-                    {likes.length}
+            <div className="my-4">
+                <p className="break-normal"> {seeMore ? content : content.substring(0, 400)} </p>
+            </div>
+            <div className="flex items-center justify-between pb-1">
+                <div className="flex gap-2">
+                    <div className="flex gap-1 items-center">
+                        {likes.length}
+                        <button onClick={() => mutate("like")}>
+                            {postLikedBySessionUser ?
+                                <HeartFilled className="text-blue-500 text-lg" />
+                                :
+                                <HeartOutlined className="text-blue-500 text-lg" />
+                            }
+                        </button>
+                    </div>
+                    <div className="flex gap-1 items-center">
+                        {comments?.length}
+                        <button>
+                            <MessageOutlined className="text-blue-500 text-lg" />
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    {content.length > 400 &&
+                        <button onClick={() => setSeeMore(!seeMore)}>
+                            <p className="underline font-medium">
+                                {seeMore ? "See Less" : "See More"}
+                            </p>
+                        </button>
+                    }
                 </div>
             </div>
-            <CommentModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                id={id}
-                name={name}
-                avatar={avatar}
-                content={content}
-                comments={comments}
-                likes={likes}
-                creatorId={creatorId}
-                sessionUserId={sessionUser.id as string}
-            />
         </div>
     )
 }
