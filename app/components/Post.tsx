@@ -1,6 +1,6 @@
 "use client"
 
-import { MessageOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,6 +8,8 @@ import axios from "axios";
 import { SessionUser } from "../types/SessionUser";
 import { useState } from "react";
 import saveButton from "../Vector.svg";
+import commentBubble from "../CommentBubble.svg";
+import heart from "../Heart.svg";
 
 type PostProps = {
     id: string,
@@ -58,12 +60,14 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 queryClient.invalidateQueries(["sessionUser"]);
                 queryClient.invalidateQueries(["following-posts"]);
                 queryClient.invalidateQueries(["genre-posts"]);
+                queryClient.invalidateQueries(["detail-post"]);
             },
             onError: (error) => {
                 queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["sessionUser"]);
                 queryClient.invalidateQueries(["following-posts"]);
                 queryClient.invalidateQueries(["genre-posts"]);
+                queryClient.invalidateQueries(["detail-post"]);
             }
         }
     )
@@ -80,7 +84,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                     src={saveButton}
                     alt="Bookmark..."
                 />
-                <p className="underline font-medium text-lg">
+                <p className="font-medium text-lg">
                     {title}
                 </p>
                 {/*
@@ -104,28 +108,40 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 <p className="break-normal"> {seeMore ? content : content.substring(0, 400)} </p>
             </div>
             <div className="flex items-center justify-between pb-1">
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
                     <div className="flex gap-1 items-center">
                         {likes.length}
                         <button onClick={() => mutate("like")}>
                             {postLikedBySessionUser ?
-                                <HeartFilled className="text-blue-500 text-lg" />
+                                <HeartFilled className="text-blue-500 text-2xl" />
                                 :
-                                <HeartOutlined className="text-blue-500 text-lg" />
+                                // <HeartOutlined className="text-blue-500 text-2xl" />
+                                <Image
+                                    className="text-blue-500"
+                                    width={24}
+                                    height={24}
+                                    src={heart}
+                                    alt="Heart..."
+                                />
                             }
                         </button>
                     </div>
                     <div className="flex gap-1 items-center">
                         {comments?.length}
-                        <button>
-                            <MessageOutlined className="text-blue-500 text-lg" />
-                        </button>
+                        <Link href={`/post/${id}`}>
+                            <Image
+                                width={24}
+                                height={24}
+                                src={commentBubble}
+                                alt="Comment Bubble..."
+                            />
+                        </Link>
                     </div>
                 </div>
                 <div>
                     {content.length > 400 &&
                         <button onClick={() => setSeeMore(!seeMore)}>
-                            <p className="underline font-medium">
+                            <p className="font-medium">
                                 {seeMore ? "See Less" : "See More"}
                             </p>
                         </button>

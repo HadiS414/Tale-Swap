@@ -65,13 +65,13 @@ export default function Home() {
 
   return (
     <div>
-      <div className="flex gap-2 m-6 pb-2 border-b border-black">
-        <h1 className="text-2xl font-bold font-verdana">
+      <div className="bg-dark-orange">
+        <h1 className="text-2xl font-bold font-verdana text-off-white p-3">
           {genre}
         </h1>
-        <Dropdown menu={{ items, onClick }}>
+        {/* <Dropdown menu={{ items, onClick }}>
           <FilterOutlined className="text-2xl" />
-        </Dropdown>
+        </Dropdown> */}
       </div>
       <div className="hidden md:block">
         <CreatePost />

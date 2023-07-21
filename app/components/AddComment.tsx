@@ -1,9 +1,12 @@
 "use client"
 
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { message } from "antd";
+import { SessionUser } from "../types/SessionUser";
+import Image from "next/image";
+import { RightCircleOutlined } from "@ant-design/icons";
 
 type PostProps = {
     id?: string
@@ -14,29 +17,35 @@ type Comment = {
     content: string
 }
 
+const fetchSessionUser = async () => {
+    const res = await axios.get("/api/auth/getSessionUser");
+    return res.data;
+}
+
 export default function AddComment({ id }: PostProps) {
     const [content, setContent] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
     const queryClient = useQueryClient();
     const [messageApi, contextHolder] = message.useMessage();
+    const { data } = useQuery<SessionUser>({
+        queryFn: fetchSessionUser,
+        queryKey: ["sessionUser"]
+    });
+    const sessionUser = { ...data }
 
     const { mutate } = useMutation(
         async (data: Comment) => axios.post("/api/posts/addComment", { data }),
         {
             onSuccess: (data) => {
                 queryClient.invalidateQueries(["posts"]);
-                queryClient.invalidateQueries(["my-posts"]);
-                queryClient.invalidateQueries(["following-posts"]);
-                queryClient.invalidateQueries(["genre-posts"]);
+                queryClient.invalidateQueries(["detail-post"]);
                 setIsDisabled(false);
                 setContent("");
                 messageApi.open({ type: "success", content: "Comment has been added!", key: "addComment" })
             },
             onError: (error) => {
                 queryClient.invalidateQueries(["posts"]);
-                queryClient.invalidateQueries(["my-posts"]);
-                queryClient.invalidateQueries(["following-posts"]);
-                queryClient.invalidateQueries(["genre-posts"]);
+                queryClient.invalidateQueries(["detail-post"]);
                 setIsDisabled(false);
                 if (error instanceof AxiosError) {
                     messageApi.open({ type: "error", content: error?.response?.data.message, key: "addComment" })
@@ -55,25 +64,32 @@ export default function AddComment({ id }: PostProps) {
     return (
         <>
             {contextHolder}
-            <form className="m-8" onSubmit={submitComment}>
-                <div className="flex flex-col my-2">
-                    <input
-                        onChange={(e) => setContent(e.target.value)}
-                        value={content}
-                        type="text"
-                        name="content"
-                        className="p-4 rounded-md my-2"
-                    />
-                </div>
-                <div className="flex justify-between items-center">
-                    <p className={`font-bold text-sm ${content.length <= 300 ? "text-gray-700" : "text-red-700"}`}> {`${content.length} / 300`} </p>
-                    <button
-                        disabled={isDisabled}
-                        className="bg-teal-600 text-white font-medium py-2 px-6 rounded-xl hover:bg-teal-500 active:bg-teal-300 disabled:opacity-25"
-                        type="submit"
-                    >
-                        Add Comment
-                    </button>
+            <form className="mx-6 my-2 border-b-2" onSubmit={submitComment}>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Image
+                            className="rounded-full"
+                            width={32}
+                            height={32}
+                            src={sessionUser.image || ""}
+                            alt="Avatar..."
+                        />
+                        <input
+                            onChange={(e) => setContent(e.target.value)}
+                            value={content}
+                            type="text"
+                            placeholder="Comment"
+                        />
+                    </div>
+                    <div>
+                        <button
+                            disabled={isDisabled}
+                            type="submit"
+                            className="flex justify-end"
+                        >
+                            <RightCircleOutlined className="text-3xl" />
+                        </button>
+                    </div>
                 </div>
             </form>
         </>
