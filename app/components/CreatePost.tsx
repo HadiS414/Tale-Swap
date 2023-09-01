@@ -64,10 +64,10 @@ export default function CreatePost() {
                             value={genre}
                             onChange={(value) => setGenre(value)}
                             options={[
-                                { value: "funny", label: "Funny" },
-                                { value: "horror", label: "Horror" },
-                                { value: "adventure", label: "Adventure" },
-                                { value: "misc", label: "Misc" },
+                                { value: "Funny", label: "Funny" },
+                                { value: "Horror", label: "Horror" },
+                                { value: "Adventure", label: "Adventure" },
+                                { value: "Misc", label: "Misc" },
                             ]}
                         />
                         <button
