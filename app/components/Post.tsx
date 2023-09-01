@@ -7,9 +7,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { SessionUser } from "../types/SessionUser";
 import { useState } from "react";
-import saveButton from "../Vector.svg";
-import commentBubble from "../CommentBubble.svg";
-import heart from "../Heart.svg";
+import saveButton from "../images/Vector.svg";
+import commentBubble from "../images/CommentBubble.svg";
+import heart from "../images/Heart.svg";
 
 type PostProps = {
     id: string,

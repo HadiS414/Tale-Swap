@@ -1,11 +1,9 @@
-import Link from "next/link";
 import Login from "./Login";
 import LoggedIn from "./LoggedIn";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import Image from "next/image";
-import mobileLogo from "../TS_mobile_logo.svg";
-import GenreNav from "./GenreNav";
+import mobileLogo from "../images/TS_mobile_logo.svg";
 
 export default async function Nav() {
     const session = await getServerSession(authOptions);

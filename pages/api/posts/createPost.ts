@@ -16,6 +16,7 @@ export default async function handler(
 
         const content: string = req.body.content;
         const genre: string = req.body.genre;
+        const title: string = req.body.title;
         const currentSessionUser = await prisma.user.findUnique({
             where: { email: session?.user?.email || undefined }
         });
@@ -31,7 +32,7 @@ export default async function handler(
         try {
             const result = await prisma.post.create({
                 data: {
-                    title: "Placeholder Title",
+                    title: title,
                     content: content,
                     genre: genre,
                     userId: currentSessionUser?.id

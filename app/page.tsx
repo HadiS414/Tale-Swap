@@ -8,6 +8,9 @@ import { PostType } from "./types/Post";
 import { FilterOutlined } from "@ant-design/icons";
 import { Dropdown, MenuProps } from "antd";
 import { useState } from "react";
+import Image from "next/image";
+import pencil from "./images/Pencil.svg"
+import Link from "next/link";
 
 const fetchPosts = async () => {
   const res = await axios.get("/api/posts/getPosts");
@@ -73,7 +76,7 @@ export default function Home() {
           <FilterOutlined className="text-2xl" />
         </Dropdown> */}
       </div>
-      <div className="hidden md:block">
+      <div className="hidden sm:block">
         <CreatePost />
       </div>
       {data?.map((post) => (
@@ -88,6 +91,17 @@ export default function Home() {
           creatorId={post.user.id}
         />
       ))}
+      <Link
+        href={'/createPost'}
+        className="fixed sm:hidden bottom-10 right-6 bg-dark-orange rounded-full p-4"
+      >
+        <Image
+          width={32}
+          height={32}
+          src={pencil}
+          alt="Pencil..."
+        />
+      </Link>
     </div>
   )
 }
