@@ -61,6 +61,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 queryClient.invalidateQueries(["following-posts"]);
                 queryClient.invalidateQueries(["genre-posts"]);
                 queryClient.invalidateQueries(["detail-post"]);
+                queryClient.invalidateQueries(["user-posts"]);
             },
             onError: (error) => {
                 queryClient.invalidateQueries(["posts"]);
@@ -68,6 +69,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 queryClient.invalidateQueries(["following-posts"]);
                 queryClient.invalidateQueries(["genre-posts"]);
                 queryClient.invalidateQueries(["detail-post"]);
+                queryClient.invalidateQueries(["user-posts"]);
             }
         }
     )
@@ -87,22 +89,15 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 <p className="font-medium text-lg">
                     {title}
                 </p>
-                {/*
-                {creatorId !== sessionUser.id &&
-                    <button
-                        className="bg-teal-600 text-white py-1 px-4 ml-2 rounded-md hover:bg-teal-500 active:bg-teal-300"
-                        onClick={() => mutate("follow")}
-                    >
-                        {userFollowedBySessionUser ?
-                            <p> Unfollow </p>
-                            :
-                            <p> Follow </p>
-                        }
-                    </button>
-                } */}
             </div>
             <div>
-                By: {name}
+                {creatorId !== sessionUser.id ?
+                    <Link href={`/profile/${creatorId}`}>
+                        By: {name}
+                    </Link>
+                    :
+                    <p> By: {name} </p>
+                }
             </div>
             <div className="my-4">
                 <p className="break-normal"> {seeMore ? content : content.substring(0, 400)} </p>

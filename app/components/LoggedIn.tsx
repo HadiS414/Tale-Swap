@@ -30,7 +30,7 @@ export default function LoggedIn({ image, email }: Props) {
             key: '2',
             label: (
                 <p className="font-bold">
-                    My Stories
+                    Profile
                 </p>
             ),
         },
