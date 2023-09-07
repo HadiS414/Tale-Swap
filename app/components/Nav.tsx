@@ -4,16 +4,20 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import Image from "next/image";
 import mobileLogo from "../images/TS_mobile_logo.svg";
+import Link from "next/link";
 
 export default async function Nav() {
     const session = await getServerSession(authOptions);
+
     return (
         <nav className="flex py-3 px-6 lg:px-16 justify-between">
             <div className="flex gap-8">
-                <Image
-                    src={mobileLogo}
-                    alt="Mobile logo..."
-                />
+                <Link href={"/"}>
+                    <Image
+                        src={mobileLogo}
+                        alt="Mobile logo..."
+                    />
+                </Link>
             </div>
             <div>
                 {!session?.user && <Login />}

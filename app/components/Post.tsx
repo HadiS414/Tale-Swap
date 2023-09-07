@@ -46,11 +46,10 @@ const fetchSessionUser = async () => {
 export default function Post({ id, name, avatar, title, content, comments, likes, creatorId }: PostProps) {
     const [seeMore, setSeeMore] = useState(false);
     const queryClient = useQueryClient();
-    const { data } = useQuery<SessionUser>({
+    const { data: sessionUser } = useQuery<SessionUser>({
         queryFn: fetchSessionUser,
         queryKey: ["sessionUser"]
     });
-    const sessionUser = { ...data }
 
     const { mutate } = useMutation(
         async (type: string) => type === "like" ? await axios.post("/api/posts/likePost", { postId: id }) : await axios.post("/api/auth/followUser", { id: creatorId }),
@@ -74,7 +73,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
         }
     )
 
-    const postLikedBySessionUser = likes.find((like) => like.userId === sessionUser.id);
+    const postLikedBySessionUser = likes.find((like) => like.userId === sessionUser?.id);
 
     return (
         <div className="m-6 border-b border-black">
@@ -85,19 +84,22 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                     src={saveButton}
                     alt="Bookmark..."
                 />
-                <p className="font-medium text-lg">
+                <p className="font-semibold text-xl">
                     {title}
                 </p>
             </div>
             <div>
-                {creatorId !== sessionUser.id ?
-                    <Link href={`/profile/${creatorId}`}>
-                        By: {name}
-                    </Link>
+                {sessionUser ?
+                    creatorId !== sessionUser?.id ?
+                        <Link href={`/profile/${creatorId}`}>
+                            By: {name}
+                        </Link>
+                        :
+                        <Link href={'/profile'}>
+                            By: {name}
+                        </Link>
                     :
-                    <Link href={'/profile'}>
-                        By: {name}
-                    </Link>
+                    <p> By: {name} </p>
                 }
             </div>
             <div className="my-4">
@@ -107,7 +109,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 <div className="flex gap-2 items-center">
                     <div className="flex gap-1 items-center">
                         {likes.length}
-                        <button onClick={() => mutate("like")}>
+                        <button onClick={() => mutate("like")} disabled={!sessionUser}>
                             {postLikedBySessionUser ?
                                 <HeartFilled className="text-blue-500 text-2xl" />
                                 :
@@ -124,14 +126,23 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                     </div>
                     <div className="flex gap-1 items-center">
                         {comments?.length}
-                        <Link href={`/post/${id}`}>
+                        {sessionUser ?
+                            <Link href={`/post/${id}`}>
+                                <Image
+                                    width={24}
+                                    height={24}
+                                    src={commentBubble}
+                                    alt="Comment Bubble..."
+                                />
+                            </Link>
+                            :
                             <Image
                                 width={24}
                                 height={24}
                                 src={commentBubble}
                                 alt="Comment Bubble..."
                             />
-                        </Link>
+                        }
                     </div>
                 </div>
                 <div>

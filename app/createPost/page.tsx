@@ -4,8 +4,15 @@ import { message } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
+import { SessionUser } from "../types/SessionUser";
+
+const fetchSessionUser = async () => {
+    const res = await axios.get("/api/auth/getSessionUser");
+    return res.data;
+}
+
 
 export default function CreatePostPage() {
     const router = useRouter();
@@ -16,6 +23,16 @@ export default function CreatePostPage() {
     const [isDisabled, setIsDisabled] = useState(false);
     const queryClient = useQueryClient();
     const [messageApi, contextHolder] = message.useMessage();
+    const { data: sessionUser, isLoading } = useQuery<SessionUser>({
+        queryFn: fetchSessionUser,
+        queryKey: ["sessionUser"]
+    });
+    if (!sessionUser) {
+        router.push("/");
+    };
+    if (isLoading) {
+        return <h1> Loading... </h1>
+    }
 
     const { mutate } = useMutation(
         async () => await axios.post("/api/posts/createPost", { content: content, genre: genre, title: title }),

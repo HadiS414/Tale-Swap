@@ -18,6 +18,9 @@ export default function MyProfilePage() {
         queryFn: fetchSessionUser,
         queryKey: ["sessionUser"]
     });
+    if (!sessionUser) {
+        router.push("/");
+    };
     if (isLoading) {
         return <h1> Loading... </h1>
     }

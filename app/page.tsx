@@ -9,10 +9,16 @@ import Image from "next/image";
 import pencil from "./images/Pencil.svg"
 import Link from "next/link";
 import ScrollingButtonGroup from "./components/ScrollingButtonGroup";
+import { SessionUser } from "./types/SessionUser";
 
 type ScrollingButton = {
   label: string;
   action: () => void;
+}
+
+const fetchSessionUser = async () => {
+  const res = await axios.get("/api/auth/getSessionUser");
+  return res.data;
 }
 
 export default function Home() {
@@ -30,6 +36,10 @@ export default function Home() {
     return res.data;
   }
 
+  const { data: sessionUser } = useQuery<SessionUser>({
+    queryFn: fetchSessionUser,
+    queryKey: ["sessionUser"]
+  });
   const { data, isLoading } = useQuery<PostType[]>({
     queryFn: fetchAllPosts,
     queryKey: ["posts"]
@@ -72,13 +82,11 @@ export default function Home() {
           HOME
         </h1>
       </div>
-      <div className="flex sm:hidden">
-        {/* <button
-          className="rounded-full text-off-white px-3 py-[2px] ml-4 mt-3 border border-black bg-blue-500">
-          Following
-        </button> */}
-        <ScrollingButtonGroup buttons={buttons} />
-      </div>
+      {sessionUser &&
+        <div className="flex sm:hidden">
+          <ScrollingButtonGroup buttons={buttons} />
+        </div>
+      }
       <div className="hidden sm:block">
         <CreatePost />
       </div>
@@ -94,17 +102,19 @@ export default function Home() {
           creatorId={post.user.id}
         />
       ))}
-      <Link
-        href={'/createPost'}
-        className="fixed sm:hidden bottom-10 right-6 bg-dark-orange rounded-full p-4"
-      >
-        <Image
-          width={32}
-          height={32}
-          src={pencil}
-          alt="Pencil..."
-        />
-      </Link>
+      {sessionUser &&
+        <Link
+          href={'/createPost'}
+          className="fixed sm:hidden bottom-10 right-6 bg-dark-orange rounded-full p-4"
+        >
+          <Image
+            width={32}
+            height={32}
+            src={pencil}
+            alt="Pencil..."
+          />
+        </Link>
+      }
     </div>
   )
 }

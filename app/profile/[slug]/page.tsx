@@ -35,6 +35,9 @@ export default function ProfilePage(url: URL) {
         queryFn: () => fetchUserDetails(url.params.slug),
         queryKey: ["user-posts"]
     })
+    if (!sessionUser) {
+        router.push("/");
+    };
     if (sessionUser?.id === data?.id) {
         router.push("/");
     };

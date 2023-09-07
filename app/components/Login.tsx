@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 export default function Login() {
     return (
         <div className="flex justify-between gap-2">
-            <button className="px-4 py-1 rounded-full bg-black text-white font-arial font-semibold">
+            <button className="px-4 py-1 rounded-full bg-blue-500 text-white font-arial font-light">
                 Sign Up
             </button>
             <button

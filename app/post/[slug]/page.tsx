@@ -40,6 +40,9 @@ export default function PostDetails(url: URL) {
         queryFn: fetchSessionUser,
         queryKey: ["sessionUser"]
     });
+    if (!sessionUser) {
+        router.push("/");
+    };
 
     const { mutate } = useMutation(
         async (id: string) => await axios.delete(`/api/posts/deleteComment/${id}`),
