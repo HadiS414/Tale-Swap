@@ -19,7 +19,19 @@ export default async function handler(
                     email: session?.user?.email || undefined
                 },
                 include: {
-                    posts: true,
+                    posts: {
+                        orderBy: {
+                            createdAt: "desc"
+                        },
+                        include: {
+                            comments: {
+                                include: {
+                                    user: true
+                                }
+                            },
+                            likes: true
+                        }
+                    },
                     comments: true,
                     likes: true,
                     following: true

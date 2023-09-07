@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Dropdown } from "antd";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 type Props = {
     image: string,
@@ -29,9 +30,11 @@ export default function LoggedIn({ image, email }: Props) {
         {
             key: '2',
             label: (
-                <p className="font-bold">
-                    Profile
-                </p>
+                <Link href={'/profile'}>
+                    <p className="font-bold">
+                        Profile
+                    </p>
+                </Link>
             ),
         },
         {

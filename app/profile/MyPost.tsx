@@ -1,28 +1,22 @@
 "use client"
 
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
+import DeletePostModal from "./DeletePostModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { HeartFilled, CloseOutlined } from "@ant-design/icons";
 import { SessionUser } from "../types/SessionUser";
-import { useState } from "react";
-import saveButton from "../images/Vector.svg";
+import Link from "next/link";
 import commentBubble from "../images/CommentBubble.svg";
 import heart from "../images/Heart.svg";
 
-type PostProps = {
-    id: string,
-    name: string,
-    avatar: string,
-    title: string,
-    content: string,
-    creatorId: string
-    likes: {
-        id: string
-        postId: string
-        userId: string
-    }[],
+type MyPostProps = {
+    id: string
+    avatar: string
+    name: string
+    title: string
+    content: string
     comments: {
         id: string;
         createdAt: string;
@@ -34,7 +28,12 @@ type PostProps = {
             name: string;
             email: string;
             image: string;
-        };
+        }
+    }[]
+    likes: {
+        id: string
+        postId: string
+        userId: string
     }[]
 }
 
@@ -43,8 +42,9 @@ const fetchSessionUser = async () => {
     return res.data;
 }
 
-export default function Post({ id, name, avatar, title, content, comments, likes, creatorId }: PostProps) {
+export default function MyPost({ id, name, title, content, comments, likes }: MyPostProps) {
     const [seeMore, setSeeMore] = useState(false);
+    const [showDeletePostModal, setShowDeletePostModal] = useState(false);
     const queryClient = useQueryClient();
     const { data } = useQuery<SessionUser>({
         queryFn: fetchSessionUser,
@@ -53,23 +53,13 @@ export default function Post({ id, name, avatar, title, content, comments, likes
     const sessionUser = { ...data }
 
     const { mutate } = useMutation(
-        async (type: string) => type === "like" ? await axios.post("/api/posts/likePost", { postId: id }) : await axios.post("/api/auth/followUser", { id: creatorId }),
+        async () => await axios.post("/api/posts/likePost", { postId: id }),
         {
             onSuccess: (data) => {
-                queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["sessionUser"]);
-                queryClient.invalidateQueries(["following-posts"]);
-                queryClient.invalidateQueries(["genre-posts"]);
-                queryClient.invalidateQueries(["detail-post"]);
-                queryClient.invalidateQueries(["user-posts"]);
             },
             onError: (error) => {
-                queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["sessionUser"]);
-                queryClient.invalidateQueries(["following-posts"]);
-                queryClient.invalidateQueries(["genre-posts"]);
-                queryClient.invalidateQueries(["detail-post"]);
-                queryClient.invalidateQueries(["user-posts"]);
             }
         }
     )
@@ -78,27 +68,13 @@ export default function Post({ id, name, avatar, title, content, comments, likes
 
     return (
         <div className="m-6 border-b border-black">
-            <div className="flex items-center gap-2">
-                <Image
-                    width={24}
-                    height={24}
-                    src={saveButton}
-                    alt="Bookmark..."
-                />
-                <p className="font-medium text-lg">
+            <div className="flex justify-between">
+                <p className="font-semibold text-xl">
                     {title}
                 </p>
-            </div>
-            <div>
-                {creatorId !== sessionUser.id ?
-                    <Link href={`/profile/${creatorId}`}>
-                        By: {name}
-                    </Link>
-                    :
-                    <Link href={'/profile'}>
-                        By: {name}
-                    </Link>
-                }
+                <div className="cursor-pointer" onClick={() => setShowDeletePostModal(true)}>
+                    <CloseOutlined />
+                </div>
             </div>
             <div className="my-4">
                 <p className="break-normal"> {seeMore ? content : content.substring(0, 400)} </p>
@@ -107,7 +83,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 <div className="flex gap-2 items-center">
                     <div className="flex gap-1 items-center">
                         {likes.length}
-                        <button onClick={() => mutate("like")}>
+                        <button onClick={() => mutate()}>
                             {postLikedBySessionUser ?
                                 <HeartFilled className="text-blue-500 text-2xl" />
                                 :
@@ -144,6 +120,11 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                     }
                 </div>
             </div>
+            <DeletePostModal
+                showModal={showDeletePostModal}
+                setShowModal={setShowDeletePostModal}
+                postId={id}
+            />
         </div>
     )
 }
