@@ -10,9 +10,11 @@ import pencil from "./images/Pencil.svg"
 import Link from "next/link";
 import ScrollingNewCreators from "./components/ScrollingNewCreators";
 import { SessionUser } from "./types/SessionUser";
+import { useState } from "react";
 
 type ScrollingFilterButton = {
   label: string;
+  active: boolean;
   action: () => void;
 }
 
@@ -23,6 +25,10 @@ const fetchSessionUser = async () => {
 
 export default function Home() {
   const queryClient = useQueryClient();
+  const [isFollowingActive, setIsFollowingActive] = useState(false);
+  const [isPersonalActive, setIsPersonalActive] = useState(false);
+  const [isFunnyActive, setIsFunnyActive] = useState(false);
+  const [isMiscActive, setIsMiscActive] = useState(false);
   const fetchAllPosts = async () => {
     const res = await axios.get("/api/posts/getPosts");
     return res.data;
@@ -51,26 +57,46 @@ export default function Home() {
   const buttons: ScrollingFilterButton[] = [
     {
       label: "Following",
+      active: isFollowingActive,
       action: () => {
         queryClient.fetchQuery(["posts"], fetchFollowingPosts);
+        setIsFollowingActive(true);
+        setIsPersonalActive(false);
+        setIsFunnyActive(false);
+        setIsMiscActive(false);
       }
     },
     {
       label: "Personal",
+      active: isPersonalActive,
       action: () => {
         queryClient.fetchQuery(["posts"], () => fetchGenrePosts("Personal"));
+        setIsPersonalActive(true);
+        setIsFollowingActive(false);
+        setIsFunnyActive(false);
+        setIsMiscActive(false);
       }
     },
     {
       label: "Funny",
+      active: isFunnyActive,
       action: () => {
         queryClient.fetchQuery(["posts"], () => fetchGenrePosts("Funny"));
+        setIsFunnyActive(true);
+        setIsPersonalActive(false);
+        setIsFollowingActive(false);
+        setIsMiscActive(false);
       }
     },
     {
       label: "Misc",
+      active: isMiscActive,
       action: () => {
         queryClient.fetchQuery(["posts"], () => fetchGenrePosts("Misc"));
+        setIsMiscActive(true);
+        setIsPersonalActive(false);
+        setIsFunnyActive(false);
+        setIsFollowingActive(false);
       }
     },
   ]
@@ -78,7 +104,13 @@ export default function Home() {
   return (
     <div>
       <div className="bg-dark-orange">
-        <h1 className="text-2xl font-bold font-verdana text-off-white p-3 ml-4" onClick={() => queryClient.fetchQuery(["posts"], fetchAllPosts)}>
+        <h1 className="text-2xl font-bold font-verdana text-off-white p-3 ml-4" onClick={() => {
+          queryClient.fetchQuery(["posts"], fetchAllPosts);
+          setIsFollowingActive(false);
+          setIsPersonalActive(false);
+          setIsFunnyActive(false);
+          setIsMiscActive(false);
+        }}>
           HOME
         </h1>
       </div>
@@ -88,7 +120,7 @@ export default function Home() {
             {buttons.map((button, index) => (
               <button
                 key={index}
-                className="rounded-full text-off-white px-3 py-[2px] ml-2 mt-3 border border-black bg-blue-500"
+                className={`rounded-full px-3 py-[2px] ml-2 mt-3 border border-black ${button.active ? "bg-blue-500 text-off-white" : "bg-off-white"}`}
                 onClick={button.action}
               >
                 {button.label}
