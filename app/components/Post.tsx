@@ -90,14 +90,9 @@ export default function Post({ id, name, avatar, title, content, comments, likes
             </div>
             <div>
                 {sessionUser ?
-                    creatorId !== sessionUser?.id ?
-                        <Link href={`/profile/${creatorId}`}>
-                            By: {name}
-                        </Link>
-                        :
-                        <Link href={'/profile'}>
-                            By: {name}
-                        </Link>
+                    <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`}>
+                        By: {name}
+                    </Link>
                     :
                     <p> By: {name} </p>
                 }

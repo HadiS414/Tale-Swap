@@ -8,10 +8,10 @@ import { PostType } from "./types/Post";
 import Image from "next/image";
 import pencil from "./images/Pencil.svg"
 import Link from "next/link";
-import ScrollingButtonGroup from "./components/ScrollingButtonGroup";
+import ScrollingNewCreators from "./components/ScrollingNewCreators";
 import { SessionUser } from "./types/SessionUser";
 
-type ScrollingButton = {
+type ScrollingFilterButton = {
   label: string;
   action: () => void;
 }
@@ -48,7 +48,7 @@ export default function Home() {
     return <h1> Loading... </h1>
   }
 
-  const buttons: ScrollingButton[] = [
+  const buttons: ScrollingFilterButton[] = [
     {
       label: "Following",
       action: () => {
@@ -84,7 +84,17 @@ export default function Home() {
       </div>
       {sessionUser &&
         <div className="flex sm:hidden">
-          <ScrollingButtonGroup buttons={buttons} />
+          <div className="flex overflow-x-auto no-scrollbar">
+            {buttons.map((button, index) => (
+              <button
+                key={index}
+                className="rounded-full text-off-white px-3 py-[2px] ml-2 mt-3 border border-black bg-blue-500"
+                onClick={button.action}
+              >
+                {button.label}
+              </button>
+            ))}
+          </div>
         </div>
       }
       <div className="hidden sm:block">
@@ -114,6 +124,28 @@ export default function Home() {
             alt="Pencil..."
           />
         </Link>
+      }
+      <ScrollingNewCreators sessionUser={sessionUser} />
+      <div className="mt-8 mx-6 rounded-3xl py-6 p-2 text-2xl bg-dark-orange text-center text-off-white border border-black">
+        Personal
+      </div>
+      <div className="mt-1 mx-6 rounded-3xl py-6 p-2 text-2xl bg-blue-500 text-center text-off-white border border-black">
+        Funny
+      </div>
+      <div className="mt-1 mb-6 mx-6 rounded-3xl py-6 p-2 text-2xl bg-off-white text-center text-black border border-black font-semibold">
+        Misc
+      </div>
+      {!sessionUser &&
+        <>
+          <div className="text-center mb-2">
+            Sign Up to Post a Story Today!
+          </div>
+          <div className="flex justify-center">
+            <button className="px-2 py-1 rounded-full bg-dark-orange font-light text-off-white mb-6">
+              SIGN UP
+            </button>
+          </div>
+        </>
       }
     </div>
   )
