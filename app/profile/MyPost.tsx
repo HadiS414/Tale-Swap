@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import DeletePostModal from "./DeletePostModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -44,13 +44,29 @@ const fetchSessionUser = async () => {
 
 export default function MyPost({ id, name, title, content, comments, likes }: MyPostProps) {
     const [seeMore, setSeeMore] = useState(false);
+    const [showDeleteButton, setShowDeleteButton] = useState(false);
     const [showDeletePostModal, setShowDeletePostModal] = useState(false);
     const queryClient = useQueryClient();
     const { data } = useQuery<SessionUser>({
         queryFn: fetchSessionUser,
         queryKey: ["sessionUser"]
     });
-    const sessionUser = { ...data }
+    const sessionUser = { ...data };
+    const deleteButtonRef = useRef<HTMLDivElement | null>(null);
+
+    const handleClickOutside = (event: MouseEvent) => {
+        const target = event.target as Node;
+        if (deleteButtonRef.current && !deleteButtonRef.current.contains(target)) {
+            setShowDeleteButton(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const { mutate } = useMutation(
         async () => await axios.post("/api/posts/likePost", { postId: id }),
@@ -72,8 +88,16 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
                 <p className="font-semibold text-xl">
                     {title}
                 </p>
-                <div className="cursor-pointer" onClick={() => setShowDeletePostModal(true)}>
-                    <CloseOutlined />
+                <div className="cursor-pointer">
+                    {showDeleteButton ?
+                        <div ref={deleteButtonRef}>
+                            <button className="bg-red-500 rounded-full px-2 py-1 text-off-white font-thin" onClick={() => setShowDeletePostModal(true)}>
+                                Delete
+                            </button>
+                        </div>
+                        :
+                        <CloseOutlined onClick={() => setShowDeleteButton(true)} />
+                    }
                 </div>
             </div>
             <div className="my-4">
