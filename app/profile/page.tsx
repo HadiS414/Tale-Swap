@@ -49,7 +49,7 @@ export default function MyProfilePage() {
                 </div>
                 <div className="flex flex-col items-center font-semibold">
                     <div className="pt-3 text-lg">
-                        25
+                        {sessionUser?.followers.length}
                     </div>
                     <div>
                         Followers

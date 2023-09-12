@@ -34,7 +34,8 @@ export default async function handler(
                     },
                     comments: true,
                     likes: true,
-                    following: true
+                    following: true,
+                    followers: true
                 }
             });
             return res.status(200).json(currentSessionUser)

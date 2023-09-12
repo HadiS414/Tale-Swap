@@ -18,7 +18,8 @@ model Post {
   content   String
   genre     String
   userId    String
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation("userPosts", fields: [userId], references: [id], map: "user_posts")
+  savedBy   User      @relation("userSavedPosts", fields: [userId], references: [id], map: "user_saved_posts")
   comments  Comment[]
   likes     Like[]
 }
@@ -45,7 +46,8 @@ model Follows {
   id          String @id @default(cuid())
   followerId  String
   followingId String
-  follower    User   @relation(fields: [followerId], references: [id], onDelete: Cascade)
+  following   User   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  follower    User   @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -56,10 +58,12 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  posts         Post[]
+  posts         Post[]    @relation("userPosts", map: "user_posts")
+  savedPosts    Post[]    @relation("userSavedPosts", map: "user_saved_posts")
   comments      Comment[]
   likes         Like[]
-  following     Follows[]
+  following     Follows[] @relation("follower")
+  followers     Follows[] @relation("following")
 }
 
 model Account {

@@ -45,19 +45,11 @@ export default function ProfilePage(url: URL) {
         async () => { await axios.post("/api/auth/followUser", { id: data?.id }) },
         {
             onSuccess: (data) => {
-                queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["sessionUser"]);
-                queryClient.invalidateQueries(["following-posts"]);
-                queryClient.invalidateQueries(["genre-posts"]);
-                queryClient.invalidateQueries(["detail-post"]);
                 queryClient.invalidateQueries(["user-posts"]);
             },
             onError: (error) => {
-                queryClient.invalidateQueries(["posts"]);
                 queryClient.invalidateQueries(["sessionUser"]);
-                queryClient.invalidateQueries(["following-posts"]);
-                queryClient.invalidateQueries(["genre-posts"]);
-                queryClient.invalidateQueries(["detail-post"]);
                 queryClient.invalidateQueries(["user-posts"]);
             }
         }
@@ -92,7 +84,7 @@ export default function ProfilePage(url: URL) {
                 </div>
                 <div className="flex flex-col items-center font-semibold">
                     <div className="pt-3 text-lg">
-                        25
+                        {data?.followers.length}
                     </div>
                     <div>
                         Followers

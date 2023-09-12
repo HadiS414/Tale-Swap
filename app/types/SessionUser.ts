@@ -50,4 +50,9 @@ export type SessionUser = {
         followingId: string
         followerId: string
     }[]
+    followers: {
+        id: string
+        followingId: string
+        followerId: string
+    }[]
 }

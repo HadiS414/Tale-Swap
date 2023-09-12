@@ -25,9 +25,11 @@ export default async function handler(
                                     user: true
                                 }
                             },
-                            likes: true
+                            likes: true,
                         }
                     },
+                    following: true,
+                    followers: true
                 }
             });
             return res.status(200).json(data);
