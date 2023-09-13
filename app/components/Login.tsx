@@ -9,7 +9,7 @@ export default function Login() {
                 Sign Up
             </button>
             <button
-                onClick={() => signIn()}
+                onClick={() => signIn('google', { redirect: true })}
                 className="underline underline-offset-4 font-bold font-arial">
                 Log In
             </button>
