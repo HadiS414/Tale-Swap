@@ -40,9 +40,11 @@ export default function LoggedIn({ image, email }: Props) {
         {
             key: '3',
             label: (
-                <p className="font-bold">
-                    Bookmarked
-                </p>
+                <Link href={'/bookmarked'}>
+                    <p className="font-bold">
+                        Bookmarked
+                    </p>
+                </Link>
             ),
         },
         {

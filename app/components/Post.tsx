@@ -8,6 +8,7 @@ import axios from "axios";
 import { SessionUser } from "../types/SessionUser";
 import { useState } from "react";
 import saveButton from "../images/Vector.svg";
+import saveButtonFilled from "../images/Vector_Filled.svg";
 import commentBubble from "../images/CommentBubble.svg";
 import heart from "../images/Heart.svg";
 
@@ -52,7 +53,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
     });
 
     const { mutate } = useMutation(
-        async (type: string) => type === "like" ? await axios.post("/api/posts/likePost", { postId: id }) : await axios.post("/api/auth/followUser", { id: creatorId }),
+        async (type: string) => type === "like" ? await axios.post("/api/posts/likePost", { postId: id }) : await axios.post("/api/posts/savePost", { postId: id }),
         {
             onSuccess: (data) => {
                 queryClient.invalidateQueries(["posts"]);
@@ -74,16 +75,28 @@ export default function Post({ id, name, avatar, title, content, comments, likes
     )
 
     const postLikedBySessionUser = likes.find((like) => like.userId === sessionUser?.id);
+    const postSavedByUser = sessionUser?.savedPosts?.find((post) => post.post.id === id);
 
     return (
         <div className="m-6 border-b border-black">
             <div className="flex items-center gap-2">
-                <Image
-                    width={24}
-                    height={24}
-                    src={saveButton}
-                    alt="Bookmark..."
-                />
+                <button onClick={() => mutate("save")} disabled={!sessionUser}>
+                    {postSavedByUser ?
+                        <Image
+                            width={24}
+                            height={24}
+                            src={saveButtonFilled}
+                            alt="Bookmark..."
+                        />
+                        :
+                        <Image
+                            width={24}
+                            height={24}
+                            src={saveButton}
+                            alt="Bookmark..."
+                        />
+                    }
+                </button>
                 <p className="font-semibold text-xl">
                     {title}
                 </p>

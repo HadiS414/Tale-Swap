@@ -35,7 +35,22 @@ export default async function handler(
                     comments: true,
                     likes: true,
                     following: true,
-                    followers: true
+                    followers: true,
+                    savedPosts: {
+                        include: {
+                            post: {
+                                include: {
+                                    user: true,
+                                    comments: {
+                                        include: {
+                                            user: true
+                                        }
+                                    },
+                                    likes: true
+                                }
+                            }
+                        }
+                    }
                 }
             });
             return res.status(200).json(currentSessionUser)
