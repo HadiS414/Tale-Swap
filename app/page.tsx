@@ -103,8 +103,8 @@ export default function Home() {
 
   return (
     <div>
-      <div className="bg-dark-orange">
-        <h1 className="text-2xl font-bold font-verdana text-off-white p-3 ml-4" onClick={() => {
+      <div className="bg-dark-orange sm:p-7">
+        <h1 className="text-2xl font-bold font-verdana text-off-white p-3 ml-4 sm:hidden" onClick={() => {
           queryClient.fetchQuery(["posts"], fetchAllPosts);
           setIsFollowingActive(false);
           setIsPersonalActive(false);
