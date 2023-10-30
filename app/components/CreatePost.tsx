@@ -45,17 +45,22 @@ export default function CreatePost() {
     return (
         <>
             {contextHolder}
-            <form onSubmit={submitPost} className="bg-white m-8 p-8 rounded-md">
-                <div className="flex flex-col my-4">
-                    <textarea
-                        name="content"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        placeholder="Tell a tale..."
-                        className="p-4 text-lg rounded-md my-2 bg-gray-200"
-                    />
+            <form onSubmit={submitPost} className="bg-white rounded-md">
+                <div className="flex flex-col mt-4 mb-8">
+                    <div className="flex relative">
+                        <textarea
+                            name="content"
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            placeholder="Write a Post"
+                            className="w-full h-12 px-3 py-2 text-lg text-black rounded-full border-black border-2 resize-none"
+                        />
+                        <div className="flex absolute right-2 top-1 items-center bg-gray-300 px-4 py-2 rounded-full">
+                            Post
+                        </div>
+                    </div>
                 </div>
-                <div className="flex items-center justify-between gap-2">
+                {/* <div className="flex items-center justify-between gap-2">
                     <p className={`font-bold text-sm ${content.length <= 300 ? "text-gray-700" : "text-red-700"}`}> {`${content.length} / 300`} </p>
                     <div className="flex gap-4">
                         <Select
@@ -78,7 +83,7 @@ export default function CreatePost() {
                             Create a post
                         </button>
                     </div>
-                </div>
+                </div> */}
             </form>
         </>
     )

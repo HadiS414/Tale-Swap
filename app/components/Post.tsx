@@ -1,16 +1,16 @@
 "use client"
 
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { SessionUser } from "../types/SessionUser";
 import { useState } from "react";
-import saveButton from "../images/Vector.svg";
-import saveButtonFilled from "../images/Vector_Filled.svg";
+import saveButton from "../images/Save.svg";
+import saveButtonFilled from "../images/Save_Filled.svg";
 import commentBubble from "../images/CommentBubble.svg";
 import heart from "../images/Heart.svg";
+import heartFilled from "../images/Heart_Filled.svg";
 
 type PostProps = {
     id: string,
@@ -78,7 +78,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
     const postSavedByUser = sessionUser?.savedPosts?.find((post) => post.post.id === id);
 
     return (
-        <div className="m-6 border-b border-black">
+        <div className="m-6 border-b border-black sm:ml-0">
             <div className="flex items-center gap-2">
                 <button onClick={() => mutate("save")} disabled={!sessionUser}>
                     {postSavedByUser ?
@@ -111,7 +111,8 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 }
             </div>
             <div className="my-4">
-                <p className="break-normal"> {seeMore ? content : content.substring(0, 400)} </p>
+                <p className="break-normal hidden sm:block"> {seeMore ? content : content.substring(0, 450)} </p>
+                <p className="break-normal sm:hidden"> {seeMore ? content : content.substring(0, 250)} </p>
             </div>
             <div className="flex items-center justify-between pb-1">
                 <div className="flex gap-2 items-center">
@@ -119,9 +120,14 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                         {likes.length}
                         <button onClick={() => mutate("like")} disabled={!sessionUser}>
                             {postLikedBySessionUser ?
-                                <HeartFilled className="text-blue-500 text-2xl" />
+                                <Image
+                                    className="text-blue-500"
+                                    width={24}
+                                    height={24}
+                                    src={heartFilled}
+                                    alt="Heart..."
+                                />
                                 :
-                                // <HeartOutlined className="text-blue-500 text-2xl" />
                                 <Image
                                     className="text-blue-500"
                                     width={24}

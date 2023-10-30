@@ -148,6 +148,7 @@ export default function CreatePostPage() {
                         className="text-xl mx-6 my-4 w-96"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
+                        rows={20}
                     />
                 </>
             }

@@ -5,11 +5,12 @@ import { useState, useEffect, useRef } from "react";
 import DeletePostModal from "./DeletePostModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { HeartFilled, CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 import { SessionUser } from "../types/SessionUser";
 import Link from "next/link";
 import commentBubble from "../images/CommentBubble.svg";
 import heart from "../images/Heart.svg";
+import heartFilled from "../images/Heart_Filled.svg";
 
 type MyPostProps = {
     id: string
@@ -109,9 +110,14 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
                         {likes.length}
                         <button onClick={() => mutate()}>
                             {postLikedBySessionUser ?
-                                <HeartFilled className="text-blue-500 text-2xl" />
+                                <Image
+                                    className="text-blue-500"
+                                    width={24}
+                                    height={24}
+                                    src={heartFilled}
+                                    alt="Heart..."
+                                />
                                 :
-                                // <HeartOutlined className="text-blue-500 text-2xl" />
                                 <Image
                                     className="text-blue-500"
                                     width={24}

@@ -59,8 +59,11 @@ export default function LoggedIn({ image, email }: Props) {
 
     return (
         <div>
-            <Dropdown menu={{ items }}>
-                <Image width={40} height={40} src={image} alt={"User image..."} className="rounded-full" />
+            <Dropdown menu={{ items }} trigger={["click"]} className="cursor-pointer">
+                <div className="flex items-center gap-2">
+                    <Image width={40} height={40} src={image} alt={"User image..."} className="rounded-full" />
+                    <p className="hidden sm:block"> {email} </p>
+                </div>
             </Dropdown>
         </div>
     )
