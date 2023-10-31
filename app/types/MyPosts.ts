@@ -27,10 +27,10 @@ export type MyPostsType = {
             postId: string
             userId: string
             user: {
-                id: string;
-                name: string;
-                email: string;
-                image: string;
+                id: string
+                name: string
+                email: string
+                image: string
             };
         }[]
     }[]

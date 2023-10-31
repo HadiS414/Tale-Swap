@@ -24,6 +24,18 @@ const fetchSessionUser = async () => {
   const res = await axios.get("/api/auth/getSessionUser");
   return res.data;
 }
+const fetchAllPosts = async () => {
+  const res = await axios.get("/api/posts/getPosts");
+  return res.data;
+}
+const fetchFollowingPosts = async () => {
+  const res = await axios.get("/api/posts/getFollowingPosts");
+  return res.data;
+}
+const fetchGenrePosts = async (genre: string) => {
+  const res = await axios.get(`/api/posts/getGenrePosts/${genre}`);
+  return res.data;
+}
 
 export default function Home() {
   const queryClient = useQueryClient();
@@ -31,18 +43,6 @@ export default function Home() {
   const [isPersonalActive, setIsPersonalActive] = useState(false);
   const [isFunnyActive, setIsFunnyActive] = useState(false);
   const [isMiscActive, setIsMiscActive] = useState(false);
-  const fetchAllPosts = async () => {
-    const res = await axios.get("/api/posts/getPosts");
-    return res.data;
-  }
-  const fetchFollowingPosts = async () => {
-    const res = await axios.get("/api/posts/getFollowingPosts");
-    return res.data;
-  }
-  const fetchGenrePosts = async (genre: string) => {
-    const res = await axios.get(`/api/posts/getGenrePosts/${genre}`);
-    return res.data;
-  }
 
   const { data: sessionUser } = useQuery<SessionUser>({
     queryFn: fetchSessionUser,
@@ -122,18 +122,9 @@ export default function Home() {
             <h1 className="text-2xl font-bold mt-2 ml-1">
               Personal
             </h1>
-            {data?.slice(0, 3).map((post) => (
-              <SideBarPosts
-                id={post.id}
-                name={post.user.name}
-                avatar={post.user.image}
-                title={post.title}
-                content={post.content}
-                comments={post.comments}
-                likes={post.likes}
-                sessionUser={sessionUser}
-              />
-            ))}
+            <SideBarPosts
+              sessionUser={sessionUser}
+            />
           </div>
         </div>
         <div className="sm:w-2/5 2xl:w-1/3 sm:mx-8">
@@ -222,18 +213,9 @@ export default function Home() {
             <h1 className="text-2xl font-bold mt-2 ml-1">
               My Stories
             </h1>
-            {data?.slice(0, 1).map((post) => (
-              <SideBarMyPost
-                id={post.id}
-                name={post.user.name}
-                avatar={post.user.image}
-                title={post.title}
-                content={post.content}
-                comments={post.comments}
-                likes={post.likes}
-                sessionUser={sessionUser}
-              />
-            ))}
+            <SideBarMyPost
+              sessionUser={sessionUser}
+            />
           </div>
         </div>
       </div>

@@ -7,51 +7,29 @@ import commentBubble from "../images/CommentBubble.svg";
 import heart from "../images/Heart.svg";
 import heartFilled from "../images/Heart_Filled.svg";
 
-type PostProps = {
-    id: string,
-    name: string,
-    avatar: string,
-    title: string,
-    content: string,
+type Props = {
     sessionUser?: SessionUser
-    likes: {
-        id: string
-        postId: string
-        userId: string
-    }[],
-    comments: {
-        id: string;
-        createdAt: string;
-        postId: string;
-        userId: string;
-        content: string;
-        user: {
-            id: string;
-            name: string;
-            email: string;
-            image: string;
-        };
-    }[]
 }
 
-export default function SideBarMyPost({ id, title, content, comments, likes, sessionUser }: PostProps) {
-    const postLikedBySessionUser = likes.find((like) => like.userId === sessionUser?.id);
+export default function SideBarMyPost({ sessionUser }: Props) {
+    const myPost = sessionUser?.posts[0];
+    const postLikedBySessionUser = myPost?.likes.find((like) => like.userId === sessionUser?.id);
 
     return (
-        <Link href={`/post/${id}`}>
+        <Link href={`/post/${myPost?.id}`}>
             <div className="m-6 sm:ml-0">
                 <div className="flex">
                     <p className="font-semibold text-md">
-                        {title}
+                        {myPost?.title}
                     </p>
                 </div>
                 <div className="my-4">
-                    <p className="break-normal"> {content.substring(0, 200)}... </p>
+                    <p className="break-normal"> {myPost?.content.substring(0, 200)}... </p>
                 </div>
                 <div className="flex items-center justify-between pb-1">
                     <div className="flex gap-2 items-center">
                         <div className="flex gap-1 items-center">
-                            {likes.length}
+                            {myPost?.likes.length}
                             <div>
                                 {postLikedBySessionUser ?
                                     <Image
@@ -73,7 +51,7 @@ export default function SideBarMyPost({ id, title, content, comments, likes, ses
                             </div>
                         </div>
                         <div className="flex gap-1 items-center">
-                            {comments?.length}
+                            {myPost?.comments?.length}
                             <Image
                                 width={24}
                                 height={24}

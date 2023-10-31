@@ -6,7 +6,8 @@ import axios, { AxiosError } from "axios";
 import { message } from "antd";
 import { SessionUser } from "../types/SessionUser";
 import Image from "next/image";
-import { RightCircleOutlined } from "@ant-design/icons";
+import arrow from "../images/Arrow.svg";
+import arrowFilled from "../images/Arrow_Filled.svg";
 
 type PostProps = {
     id?: string
@@ -64,8 +65,8 @@ export default function AddComment({ id }: PostProps) {
     return (
         <>
             {contextHolder}
-            <form className="mx-6 my-2 border-b-2" onSubmit={submitComment}>
-                <div className="flex items-center justify-between">
+            <form className="mx-6 sm:ml-0 sm:mr-2 sm:mt-4 my-2 border-b-2" onSubmit={submitComment}>
+                <div className="flex items-center justify-between sm:w-full">
                     <div className="flex items-center gap-2">
                         <Image
                             className="rounded-full"
@@ -87,7 +88,23 @@ export default function AddComment({ id }: PostProps) {
                             type="submit"
                             className="flex justify-end"
                         >
-                            <RightCircleOutlined className="text-3xl" />
+                            {content.length > 0 ?
+                                <Image
+                                    className="rounded-full"
+                                    width={18}
+                                    height={6}
+                                    src={arrowFilled}
+                                    alt="Arrow..."
+                                />
+                                :
+                                <Image
+                                    className="rounded-full"
+                                    width={18}
+                                    height={6}
+                                    src={arrow}
+                                    alt="Arrow..."
+                                />
+                            }
                         </button>
                     </div>
                 </div>
