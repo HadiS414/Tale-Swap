@@ -8,7 +8,6 @@ import { SessionUser } from "../types/SessionUser";
 import MyPost from "./MyPost";
 import SideBarPosts from "../components/SideBarPosts";
 import ScrollingNewCreators from "../components/ScrollingNewCreators";
-import SideBarMyPost from "../components/SideBarMyPost";
 
 const fetchSessionUser = async () => {
     const res = await axios.get("/api/auth/getSessionUser");
