@@ -79,29 +79,56 @@ export default function Post({ id, name, avatar, title, content, comments, likes
 
     return (
         <div className="m-6 border-b border-black sm:ml-0">
-            <div className="flex items-center gap-2">
-                <button onClick={() => mutate("save")} disabled={!sessionUser}>
-                    {postSavedByUser ?
-                        <Image
-                            width={24}
-                            height={24}
-                            src={saveButtonFilled}
-                            alt="Bookmark..."
-                        />
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <button onClick={() => mutate("save")} disabled={!sessionUser}>
+                        {postSavedByUser ?
+                            <Image
+                                width={24}
+                                height={24}
+                                src={saveButtonFilled}
+                                alt="Bookmark..."
+                            />
+                            :
+                            <Image
+                                width={24}
+                                height={24}
+                                src={saveButton}
+                                alt="Bookmark..."
+                            />
+                        }
+                    </button>
+                    <p className="font-semibold font-montserrat text-xl">
+                        {title}
+                    </p>
+                </div>
+                <div className="hidden sm:block">
+                    {sessionUser ?
+                        <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`} className="flex items-center gap-1">
+                            <Image
+                                className="rounded-full"
+                                width={18}
+                                height={6}
+                                src={avatar}
+                                alt="Avatar..."
+                            />
+                            <p className="font-montserrat text-xs font-normal"> {name} </p>
+                        </Link>
                         :
-                        <Image
-                            width={24}
-                            height={24}
-                            src={saveButton}
-                            alt="Bookmark..."
-                        />
+                        <div className="flex items-center gap-1">
+                            <Image
+                                className="rounded-full"
+                                width={18}
+                                height={6}
+                                src={avatar}
+                                alt="Avatar..."
+                            />
+                            <p className="font-montserrat text-xs font-normal"> {name} </p>
+                        </div>
                     }
-                </button>
-                <p className="font-semibold font-montserrat text-xl">
-                    {title}
-                </p>
+                </div>
             </div>
-            <div>
+            <div className="sm:hidden">
                 {sessionUser ?
                     <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`}>
                         <p className="font-montserrat">
