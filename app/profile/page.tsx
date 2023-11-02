@@ -40,9 +40,6 @@ export default function MyProfilePage() {
             <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
                 <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
                     <div className="border rounded-3xl pl-2">
-                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
-                            Personal
-                        </h1>
                         <SideBarPosts
                             sessionUser={sessionUser}
                         />
