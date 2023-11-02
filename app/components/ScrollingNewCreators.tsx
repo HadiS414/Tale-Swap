@@ -19,9 +19,6 @@ export default function ScrollingNewCreators({ sessionUser }: Props) {
         queryFn: fetchNewUsers,
         queryKey: ["new-users"]
     });
-    if (isLoading) {
-        return <h1> Loading... </h1>
-    }
 
     return (
         <div className="sm:border sm:rounded-3xl p-2">

@@ -57,9 +57,6 @@ export default function ProfilePage(url: URL) {
             }
         }
     )
-    if (isLoading) {
-        return <h1> Loading... </h1>
-    }
 
     const userFollowedBySessionUser = sessionUser?.following?.find((followedUser) => followedUser.followingId === data?.id);
 

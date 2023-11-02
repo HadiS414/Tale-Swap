@@ -72,10 +72,6 @@ export default function PostDetails(url: URL) {
         }
     ];
 
-    if (isLoading) {
-        return "Loading...";
-    }
-
     return (
         <div>
             <div className="bg-dark-orange sm:p-7 flex gap-1">

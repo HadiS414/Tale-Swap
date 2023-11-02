@@ -52,9 +52,6 @@ export default function Home() {
     queryFn: fetchAllPosts,
     queryKey: ["posts"]
   })
-  if (isLoading) {
-    return <h1> Loading... </h1>
-  }
 
   const buttons: ScrollingFilterButton[] = [
     {
@@ -208,16 +205,7 @@ export default function Home() {
           <ScrollingNewCreators sessionUser={sessionUser} />
           {!sessionUserLoading &&
             <>
-              {sessionUser ?
-                <div className="border rounded-3xl pl-2 mt-4">
-                  <h1 className="text-2xl font-extrabold mt-2 ml-1 font-montserrat">
-                    My Stories
-                  </h1>
-                  <SideBarMyPost
-                    sessionUser={sessionUser}
-                  />
-                </div>
-                :
+              {!sessionUser ?
                 <div className="flex items-center justify-center border rounded-3xl pl-2 mt-4 h-32">
                   <div className="flex flex-col items-center">
                     <div className="font-montserrat text-center mb-2">
@@ -228,6 +216,19 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
+                :
+                <>
+                  {sessionUser.posts.length > 0 &&
+                    <div className="border rounded-3xl pl-2 mt-4">
+                      <h1 className="text-2xl font-extrabold mt-2 ml-1 font-montserrat">
+                        My Stories
+                      </h1>
+                      <SideBarMyPost
+                        sessionUser={sessionUser}
+                      />
+                    </div>
+                  }
+                </>
               }
             </>
           }

@@ -27,7 +27,7 @@ export default function SideBarPosts({ sessionUser }: Props) {
     const queryClient = useQueryClient();
     queryClient.fetchQuery(["personalPosts"], () => fetchGenrePosts("Personal"));
     queryClient.fetchQuery(["miscPosts"], () => fetchGenrePosts("Misc"));
-    const { data: personalPosts, isLoading } = useQuery<PostType[]>({
+    const { data: personalPosts, isLoading: personalLoading } = useQuery<PostType[]>({
         queryFn: fetchAllPosts,
         queryKey: ["personalPosts"]
     });
@@ -35,9 +35,6 @@ export default function SideBarPosts({ sessionUser }: Props) {
         queryFn: fetchAllPosts,
         queryKey: ["miscPosts"]
     });
-    if (isLoading) {
-        return <h1> Loading... </h1>
-    }
 
     return (
         <div>

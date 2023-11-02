@@ -24,9 +24,6 @@ export default function BookMarkedPage() {
     if (!sessionUser) {
         router.push("/");
     };
-    if (isLoading) {
-        return <h1> Loading... </h1>
-    }
 
     return (
         <div>

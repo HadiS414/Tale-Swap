@@ -30,9 +30,6 @@ export default function CreatePostPage() {
     if (!sessionUser) {
         router.push("/");
     };
-    if (isLoading) {
-        return <h1> Loading... </h1>
-    }
 
     const { mutate } = useMutation(
         async () => await axios.post("/api/posts/createPost", { content: content, genre: genre, title: title }),
