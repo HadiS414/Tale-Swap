@@ -47,13 +47,13 @@ export default function DeletePostModal({ showModal, setShowModal, postId }: Del
                 cancelButtonProps={{ hidden: true }}
                 okButtonProps={{ hidden: true }}
             >
-                <div className="text-center">
+                <div className="text-center font-montserrat">
                     <h1 className="text-3xl font-semibold">
                         Delete Post?
                     </h1>
                     <p className="my-3 text-lg"> This action is permanent. </p>
                 </div>
-                <div className="flex justify-center gap-8 text-lg items-center" onClick={handleCancel}>
+                <div className="flex justify-center gap-8 text-lg items-center font-montserrat" onClick={handleCancel}>
                     <div className="underline cursor-pointer">
                         No
                     </div>

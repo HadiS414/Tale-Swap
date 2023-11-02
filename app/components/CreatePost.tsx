@@ -98,16 +98,16 @@ export default function CreatePost() {
             <div className="bg-white rounded-md">
                 {!showEdit ?
                     <div className="flex flex-col relative mt-4 mb-8" onClick={() => setShowEdit(true)}>
-                        <div className="w-full h-12 px-3 py-2 text-lg text-black font-light rounded-full border-black border-2">
+                        <div className="w-full h-12 px-3 py-2 text-lg text-black font-light font-montserrat rounded-full border-black border-2">
                             Write a Post
                         </div>
-                        <div className="flex absolute right-2 top-1 items-center bg-gray-200 px-4 py-2 rounded-full">
+                        <div className="font-montserrat flex absolute right-2 top-1 items-center bg-gray-200 px-4 py-2 rounded-full">
                             Post
                         </div>
                     </div>
                     :
                     <div className="flex flex-col relative mt-4 mb-8">
-                        <div className="w-full px-3 py-2 text-lg text-black rounded-3xl border-black border">
+                        <div className="font-montserrat w-full px-3 py-2 text-lg text-black rounded-3xl border-black border">
                             <input
                                 placeholder="Title"
                                 className="text-xl w-4/6 font-medium"
@@ -140,7 +140,7 @@ export default function CreatePost() {
                             }
                         </div>
                         {genreSelect &&
-                            <div className="flex items-center gap-2 w-full px-3 py-2 mt-2 text-lg text-black rounded-2xl border-black border">
+                            <div className="font-montserrat flex items-center gap-2 w-full px-3 py-2 mt-2 text-lg text-black rounded-2xl border-black border">
                                 Select Genre:
                                 {buttons.map((button, index) => (
                                     <button

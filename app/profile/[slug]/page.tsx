@@ -76,7 +76,7 @@ export default function ProfilePage(url: URL) {
             <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
                 <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
                     <div className="border rounded-3xl pl-2">
-                        <h1 className="text-2xl font-bold mt-2 ml-1">
+                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
                             Personal
                         </h1>
                         <SideBarPosts
@@ -85,18 +85,18 @@ export default function ProfilePage(url: URL) {
                     </div>
                 </div>
                 <div className="sm:w-2/5 2xl:w-1/3 sm:mx-8">
-                    <div className="mt-2 ml-4 font-extrabold text-2xl sm:hidden">
+                    <div className="mt-2 ml-4 font-extrabold text-2xl sm:hidden font-verdana">
                         {data?.name.toUpperCase()}'S STORIES
                     </div>
                     <div className="sm:flex gap-2 hidden">
                         <button onClick={() => router.back()}>
                             <ArrowLeftOutlined className="ml-2 text-lg" />
                         </button>
-                        <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block">
+                        <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block font-verdana">
                             {data?.name.toUpperCase()}'S STORIES
                         </h1>
                     </div>
-                    <div className="flex gap-10">
+                    <div className="flex gap-10 font-montserrat">
                         <div className="flex flex-col items-center ml-6 font-semibold">
                             <div className="pt-3 text-lg">
                                 {data?.posts.length}
@@ -135,7 +135,7 @@ export default function ProfilePage(url: URL) {
                 <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
                     <ScrollingNewCreators sessionUser={sessionUser} />
                     <div className="border rounded-3xl pl-2 mt-4">
-                        <h1 className="text-2xl font-bold mt-2 ml-1">
+                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
                             My Stories
                         </h1>
                         <SideBarMyPost

@@ -34,8 +34,8 @@ export default function SideBarPosts({ sessionUser }: Props) {
                 data?.slice(0, 3).map((post) => (
                     <Link href={`/post/${post.id}`}>
                         <div className="m-6 sm:ml-0">
-                            <div className="flex gap-2">
-                                <p className="font-semibold text-md">
+                            <div className="flex gap-2 justify-between">
+                                <p className="font-montserrat font-semibold text-md">
                                     {post.title}
                                 </p>
                                 <div className="flex items-center gap-1">
@@ -46,11 +46,11 @@ export default function SideBarPosts({ sessionUser }: Props) {
                                         src={post.user.image}
                                         alt="Avatar..."
                                     />
-                                    <p className="text-xs font-normal"> {post.user.name} </p>
+                                    <p className="font-montserrat text-xs font-normal"> {post.user.name} </p>
                                 </div>
                             </div>
                             <div className="my-4">
-                                <p className="break-normal"> {post.content.substring(0, 200)}... </p>
+                                <p className="font-montserrat break-normal"> {post.content.substring(0, 200)}... </p>
                             </div>
                             <div className="flex items-center justify-between pb-1">
                                 <div className="flex gap-2 items-center">
@@ -87,7 +87,7 @@ export default function SideBarPosts({ sessionUser }: Props) {
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="font-medium">
+                                    <p className="font-montserrat font-medium">
                                         See More
                                     </p>
                                 </div>

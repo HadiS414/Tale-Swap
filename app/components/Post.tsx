@@ -97,22 +97,24 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                         />
                     }
                 </button>
-                <p className="font-semibold text-xl">
+                <p className="font-semibold font-montserrat text-xl">
                     {title}
                 </p>
             </div>
             <div>
                 {sessionUser ?
                     <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`}>
-                        By: {name}
+                        <p className="font-montserrat">
+                            By: {name}
+                        </p>
                     </Link>
                     :
-                    <p> By: {name} </p>
+                    <p className="font-montserrat"> By: {name} </p>
                 }
             </div>
             <div className="my-4">
-                <p className="break-normal hidden sm:block"> {seeMore ? content : content.substring(0, 450)} </p>
-                <p className="break-normal sm:hidden"> {seeMore ? content : content.substring(0, 250)} </p>
+                <p className="font-montserrat break-normal hidden sm:block"> {seeMore ? content : content.substring(0, 450)} </p>
+                <p className="font-montserrat break-normal sm:hidden"> {seeMore ? content : content.substring(0, 250)} </p>
             </div>
             <div className="flex items-center justify-between pb-1">
                 <div className="flex gap-2 items-center">
@@ -162,7 +164,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 <div>
                     {content.length > 400 &&
                         <button onClick={() => setSeeMore(!seeMore)}>
-                            <p className="font-medium">
+                            <p className="font-montserrat font-medium">
                                 {seeMore ? "See Less" : "See More"}
                             </p>
                         </button>

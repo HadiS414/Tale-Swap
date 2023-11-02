@@ -75,25 +75,25 @@ export default function CreatePostPage() {
                             CHOOSE A GENRE
                         </h1>
                     </div>
-                    <div className="text-center text-2xl font-bold my-8">
+                    <div className="font-montserrat text-center text-2xl font-bold my-8">
                         What Genre Is Your Story?
                     </div>
                     <div
-                        className="mt-8 mx-6 rounded-3xl py-8 p-2 text-2xl bg-dark-orange text-center text-off-white border border-black"
+                        className="font-montserrat mt-8 mx-6 rounded-3xl py-8 p-2 text-2xl bg-dark-orange text-center text-off-white border border-black"
                         onClick={() => {
                             setGenre("Personal");
                             setDisplayGenres(false);
                         }}>
                         Personal
                     </div>
-                    <div className="mt-1 mx-6 rounded-3xl py-8 p-2 text-2xl bg-blue-500 text-center text-off-white border border-black"
+                    <div className="font-montserrat mt-1 mx-6 rounded-3xl py-8 p-2 text-2xl bg-blue-500 text-center text-off-white border border-black"
                         onClick={() => {
                             setGenre("Funny");
                             setDisplayGenres(false);
                         }}>
                         Funny
                     </div>
-                    <div className="mt-1 mx-6 rounded-3xl py-8 p-2 text-2xl bg-off-white text-center text-black border border-black"
+                    <div className="font-montserrat mt-1 mx-6 rounded-3xl py-8 p-2 text-2xl bg-off-white text-center text-black border border-black"
                         onClick={() => {
                             setGenre("Misc");
                             setDisplayGenres(false);
@@ -113,7 +113,7 @@ export default function CreatePostPage() {
                     </div>
                     {genre &&
                         <div>
-                            <button className="rounded-full text-off-white px-3 py-1 ml-4 mt-4 border border-black bg-dark-orange">
+                            <button className="font-montserrat rounded-full text-off-white px-3 py-1 ml-4 mt-4 border border-black bg-dark-orange">
                                 {genre}
                             </button>
                         </div>
@@ -121,7 +121,7 @@ export default function CreatePostPage() {
                     <div className="flex justify-between my-4 ml-6">
                         <input
                             placeholder="Title"
-                            className="text-2xl w-4/6"
+                            className="text-2xl w-4/6 font-montserrat"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
@@ -129,7 +129,7 @@ export default function CreatePostPage() {
                             <button
                                 onClick={submitPost}
                                 disabled={isDisabled}
-                                className="rounded-full text-off-white px-3 py-1 mr-4 border border-black bg-blue-500"
+                                className="font-montserrat rounded-full text-off-white px-3 py-1 mr-4 border border-black bg-blue-500"
                             >
                                 Post
                             </button>
@@ -137,7 +137,7 @@ export default function CreatePostPage() {
                             <button
                                 disabled={!content || !title}
                                 onClick={() => setDisplayGenres(true)}
-                                className={`rounded-full text-off-white px-3 py-1 mr-4 border border-black ${content && title ? "bg-blue-500" : "bg-gray-300"}`}
+                                className={`font-montserrat rounded-full text-off-white px-3 py-1 mr-4 border border-black ${content && title ? "bg-blue-500" : "bg-gray-300"}`}
                             >
                                 Next
                             </button>
@@ -145,7 +145,7 @@ export default function CreatePostPage() {
                     </div>
                     <textarea
                         placeholder="Enter your story here..."
-                        className="text-xl mx-6 my-4 w-96"
+                        className="text-xl mx-6 my-4 w-96 font-montserrat"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         rows={20}

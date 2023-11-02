@@ -23,7 +23,7 @@ export default function LoggedIn({ image, email }: Props) {
                         src={image}
                         alt="Avatar..."
                     />
-                    <p className="font-semibold"> {email} </p>
+                    <p className="font-montserrat font-semibold"> {email} </p>
                 </div>
             ),
         },
@@ -31,7 +31,7 @@ export default function LoggedIn({ image, email }: Props) {
             key: '2',
             label: (
                 <Link href={'/profile'}>
-                    <p className="font-bold">
+                    <p className="font-montserrat font-bold">
                         Profile
                     </p>
                 </Link>
@@ -41,7 +41,7 @@ export default function LoggedIn({ image, email }: Props) {
             key: '3',
             label: (
                 <Link href={'/bookmarked'}>
-                    <p className="font-bold">
+                    <p className="font-montserrat font-bold">
                         Bookmarked
                     </p>
                 </Link>
@@ -50,7 +50,7 @@ export default function LoggedIn({ image, email }: Props) {
         {
             key: '4',
             label: (
-                <button className="text-red-600 font-bold" onClick={() => signOut()}>
+                <button className="font-montserrat text-red-600 font-bold" onClick={() => signOut()}>
                     Log out
                 </button>
             ),
@@ -62,7 +62,7 @@ export default function LoggedIn({ image, email }: Props) {
             <Dropdown menu={{ items }} trigger={["click"]} className="cursor-pointer">
                 <div className="flex items-center gap-2">
                     <Image width={40} height={40} src={image} alt={"User image..."} className="rounded-full" />
-                    <p className="hidden sm:block"> {email} </p>
+                    <p className="hidden sm:block font-montserrat"> {email} </p>
                 </div>
             </Dropdown>
         </div>

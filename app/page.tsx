@@ -44,7 +44,7 @@ export default function Home() {
   const [isFunnyActive, setIsFunnyActive] = useState(false);
   const [isMiscActive, setIsMiscActive] = useState(false);
 
-  const { data: sessionUser } = useQuery<SessionUser>({
+  const { data: sessionUser, isLoading: sessionUserLoading } = useQuery<SessionUser>({
     queryFn: fetchSessionUser,
     queryKey: ["sessionUser"]
   });
@@ -119,7 +119,7 @@ export default function Home() {
       <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
         <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
           <div className="border rounded-3xl pl-2">
-            <h1 className="text-2xl font-bold mt-2 ml-1">
+            <h1 className="text-2xl font-bold mt-2 ml-1 font-montserrat">
               Personal
             </h1>
             <SideBarPosts
@@ -128,7 +128,7 @@ export default function Home() {
           </div>
         </div>
         <div className="sm:w-2/5 2xl:w-1/3 sm:mx-8">
-          <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block" onClick={() => {
+          <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block font-verdana" onClick={() => {
             queryClient.fetchQuery(["posts"], fetchAllPosts);
             setIsFollowingActive(false);
             setIsPersonalActive(false);
@@ -143,7 +143,7 @@ export default function Home() {
                 {buttons.map((button, index) => (
                   <button
                     key={index}
-                    className={`rounded-full px-3 py-[2px] sm:py-[1px] mt-3 border border-black ${button.active ? "bg-blue-500 text-off-white" : "bg-off-white"}`}
+                    className={`font-montserrat rounded-full px-3 py-[2px] sm:py-[1px] mt-3 border border-black ${button.active ? "bg-blue-500 text-off-white" : "bg-off-white"}`}
                     onClick={button.action}
                   >
                     {button.label}
@@ -184,22 +184,22 @@ export default function Home() {
           }
           <div className="sm:hidden mx-6">
             <ScrollingNewCreators sessionUser={sessionUser} />
-            <div className="mt-8 rounded-3xl py-6 p-2 text-2xl bg-dark-orange text-center text-off-white border border-black">
+            <div className="font-montserrat mt-8 rounded-3xl py-6 p-2 text-2xl bg-dark-orange text-center text-off-white border border-black">
               Personal
             </div>
-            <div className="mt-1 rounded-3xl py-6 p-2 text-2xl bg-blue-500 text-center text-off-white border border-black">
+            <div className="font-montserrat mt-1 rounded-3xl py-6 p-2 text-2xl bg-blue-500 text-center text-off-white border border-black">
               Funny
             </div>
-            <div className="mt-1 mb-6 rounded-3xl py-6 p-2 text-2xl bg-off-white text-center text-black border border-black font-semibold">
+            <div className="font-montserrat mt-1 mb-6 rounded-3xl py-6 p-2 text-2xl bg-off-white text-center text-black border border-black font-semibold">
               Misc
             </div>
             {!sessionUser &&
               <>
-                <div className="text-center mb-2">
+                <div className="font-montserrat text-center mb-2">
                   Sign Up to Post a Story Today!
                 </div>
                 <div className="flex justify-center">
-                  <button className="px-2 py-1 rounded-full bg-dark-orange font-light text-off-white mb-6">
+                  <button className="font-montserrat px-2 py-1 rounded-full bg-dark-orange font-light text-off-white mb-6">
                     SIGN UP
                   </button>
                 </div>
@@ -209,14 +209,31 @@ export default function Home() {
         </div>
         <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
           <ScrollingNewCreators sessionUser={sessionUser} />
-          <div className="border rounded-3xl pl-2 mt-4">
-            <h1 className="text-2xl font-bold mt-2 ml-1">
-              My Stories
-            </h1>
-            <SideBarMyPost
-              sessionUser={sessionUser}
-            />
-          </div>
+          {!sessionUserLoading &&
+            <>
+              {sessionUser ?
+                <div className="border rounded-3xl pl-2 mt-4">
+                  <h1 className="text-2xl font-extrabold mt-2 ml-1 font-montserrat">
+                    My Stories
+                  </h1>
+                  <SideBarMyPost
+                    sessionUser={sessionUser}
+                  />
+                </div>
+                :
+                <div className="flex items-center justify-center border rounded-3xl pl-2 mt-4 h-32">
+                  <div className="flex flex-col items-center">
+                    <div className="font-montserrat text-center mb-2">
+                      Sign Up to Post a Story Today!
+                    </div>
+                    <button className="font-montserrat px-2 py-1 rounded-full bg-blue-500 font-light text-off-white mb-2">
+                      SIGN UP
+                    </button>
+                  </div>
+                </div>
+              }
+            </>
+          }
         </div>
       </div>
     </div>

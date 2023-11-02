@@ -65,7 +65,7 @@ export default function PostDetails(url: URL) {
         {
             key: 'delete',
             label: (
-                <button className="text-red-600 font-bold" onClick={() => mutate(selectedComment)}>
+                <button className="text-red-600 font-bold font-montserrat" onClick={() => mutate(selectedComment)}>
                     Delete
                 </button>
             ),
@@ -89,7 +89,7 @@ export default function PostDetails(url: URL) {
             <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
                 <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
                     <div className="border rounded-3xl pl-2">
-                        <h1 className="text-2xl font-bold mt-2 ml-1">
+                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
                             Personal
                         </h1>
                         <SideBarPosts
@@ -102,7 +102,7 @@ export default function PostDetails(url: URL) {
                         <button onClick={() => router.back()}>
                             <ArrowLeftOutlined className="ml-2 text-lg" />
                         </button>
-                        <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block">
+                        <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block font-verdana">
                             VIEW STORY
                         </h1>
                     </div>
@@ -119,7 +119,7 @@ export default function PostDetails(url: URL) {
                         />
                     }
                     {data?.comments?.map((comment) => (
-                        <div key={comment.id} className="mx-6 sm:ml-0 sm:mr-2 sm:mt-1 border-b-2">
+                        <div key={comment.id} className="font-montserrat mx-6 sm:ml-0 sm:mr-2 sm:mt-1 border-b-2">
                             <div className="flex items-center gap-2">
                                 <Image
                                     className="rounded-full"
@@ -151,7 +151,7 @@ export default function PostDetails(url: URL) {
                 <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
                     <ScrollingNewCreators sessionUser={sessionUser} />
                     <div className="border rounded-3xl pl-2 mt-4">
-                        <h1 className="text-2xl font-bold mt-2 ml-1">
+                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
                             My Stories
                         </h1>
                         <SideBarMyPost

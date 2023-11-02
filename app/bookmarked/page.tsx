@@ -41,7 +41,7 @@ export default function BookMarkedPage() {
             <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
                 <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
                     <div className="border rounded-3xl pl-2">
-                        <h1 className="text-2xl font-bold mt-2 ml-1">
+                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
                             Personal
                         </h1>
                         <SideBarPosts
@@ -54,7 +54,7 @@ export default function BookMarkedPage() {
                         <button onClick={() => router.back()}>
                             <ArrowLeftOutlined className="ml-2 text-lg" />
                         </button>
-                        <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block">
+                        <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block font-verdana">
                             BOOKMARKED
                         </h1>
                     </div>
@@ -74,7 +74,7 @@ export default function BookMarkedPage() {
                 <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
                     <ScrollingNewCreators sessionUser={sessionUser} />
                     <div className="border rounded-3xl pl-2 mt-4">
-                        <h1 className="text-2xl font-bold mt-2 ml-1">
+                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
                             My Stories
                         </h1>
                         <SideBarMyPost

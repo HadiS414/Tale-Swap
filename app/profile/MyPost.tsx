@@ -84,7 +84,7 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
     const postLikedBySessionUser = likes.find((like) => like.userId === sessionUser.id);
 
     return (
-        <div className="m-6 border-b border-black">
+        <div className="m-6 border-b border-black font-montserrat">
             <div className="flex justify-between">
                 <p className="font-semibold text-xl">
                     {title}
