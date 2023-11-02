@@ -177,30 +177,41 @@ export default function Home() {
               />
             </Link>
           }
-          <div className="sm:hidden mx-6">
-            <ScrollingNewCreators sessionUser={sessionUser} />
-            <div className="font-montserrat mt-8 rounded-3xl py-6 p-2 text-2xl bg-dark-orange text-center text-off-white border border-black">
-              Personal
+          {!sessionUserLoading &&
+            <div className="sm:hidden mx-6">
+              <ScrollingNewCreators sessionUser={sessionUser} />
+              <div
+                className="font-montserrat mt-8 rounded-3xl py-6 p-2 text-2xl bg-dark-orange text-center text-off-white border border-black"
+                onClick={buttons[1].action}
+              >
+                Personal
+              </div>
+              <div
+                className="font-montserrat mt-1 rounded-3xl py-6 p-2 text-2xl bg-blue-500 text-center text-off-white border border-black"
+                onClick={buttons[2].action}
+              >
+                Funny
+              </div>
+              <div
+                className="font-montserrat mt-1 mb-6 rounded-3xl py-6 p-2 text-2xl bg-off-white text-center text-black border border-black font-semibold"
+                onClick={buttons[3].action}
+              >
+                Misc
+              </div>
+              {!sessionUser && !sessionUserLoading &&
+                <>
+                  <div className="font-montserrat text-center mb-2">
+                    Sign Up to Post a Story Today!
+                  </div>
+                  <div className="flex justify-center">
+                    <button className="font-montserrat px-2 py-1 rounded-full bg-dark-orange font-light text-off-white mb-6">
+                      SIGN UP
+                    </button>
+                  </div>
+                </>
+              }
             </div>
-            <div className="font-montserrat mt-1 rounded-3xl py-6 p-2 text-2xl bg-blue-500 text-center text-off-white border border-black">
-              Funny
-            </div>
-            <div className="font-montserrat mt-1 mb-6 rounded-3xl py-6 p-2 text-2xl bg-off-white text-center text-black border border-black font-semibold">
-              Misc
-            </div>
-            {!sessionUser &&
-              <>
-                <div className="font-montserrat text-center mb-2">
-                  Sign Up to Post a Story Today!
-                </div>
-                <div className="flex justify-center">
-                  <button className="font-montserrat px-2 py-1 rounded-full bg-dark-orange font-light text-off-white mb-6">
-                    SIGN UP
-                  </button>
-                </div>
-              </>
-            }
-          </div>
+          }
         </div>
         <div className="hidden sm:block w-80 mt-6 sticky right-16">
           <ScrollingNewCreators sessionUser={sessionUser} />
