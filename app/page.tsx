@@ -3,6 +3,7 @@
 import CreatePost from "./components/CreatePost"
 import Post from "./components/Post";
 import axios from "axios";
+import { signIn } from 'next-auth/react';
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PostType } from "./types/Post";
 import Image from "next/image";
@@ -201,7 +202,7 @@ export default function Home() {
             }
           </div>
         </div>
-        <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
+        <div className="hidden sm:block w-80 mt-6 sticky right-16">
           <ScrollingNewCreators sessionUser={sessionUser} />
           {!sessionUserLoading &&
             <>
@@ -211,7 +212,10 @@ export default function Home() {
                     <div className="font-montserrat text-center mb-2">
                       Sign Up to Post a Story Today!
                     </div>
-                    <button className="font-montserrat px-2 py-1 rounded-full bg-blue-500 font-light text-off-white mb-2">
+                    <button
+                      className="font-montserrat px-2 py-1 rounded-full bg-blue-500 font-light text-off-white mb-2"
+                      onClick={() => signIn('google', { redirect: true })}
+                    >
                       SIGN UP
                     </button>
                   </div>

@@ -21,33 +21,33 @@ export default function ScrollingNewCreators({ sessionUser }: Props) {
     });
 
     return (
-        <div className="sm:border sm:rounded-3xl p-2">
+        <div className="sm:border sm:rounded-3xl p-2 sm:w-80 overflow-x-auto sm:no-scrollbar">
             <h1 className="font-montserrat mb-2 text-3xl font-semibold sm:text-2xl"> New Creators </h1>
-            <div className="flex gap-8">
+            <div className="flex gap-6">
                 {data?.map((user) => (
                     <>
-                        <div className="flex-col justify-center overflow-x-auto no-scrollbar w-[72px]">
+                        <div className="flex-col justify-center">
                             {sessionUser ?
                                 <Link href={user.id === sessionUser?.id ? '/profile' : `/profile/${user.id}`}>
                                     <Image
-                                        width={72}
-                                        height={72}
+                                        width={80}
+                                        height={80}
                                         src={user.image}
                                         alt="User Profile..."
-                                        className="mt-4 rounded-full"
+                                        className="mt-4 rounded-full h-[80px] sm:h-[72px]"
                                     />
-                                    <p className="font-montserrat font-semibold text-center"> {user.name} </p>
+                                    <p className="font-montserrat font-semibold text-center w-[80px] sm:w-[72px]"> {user.name} </p>
                                 </Link>
                                 :
                                 <>
                                     <Image
-                                        width={72}
-                                        height={72}
+                                        width={80}
+                                        height={80}
                                         src={user.image}
                                         alt="User Profile..."
-                                        className="mt-4 rounded-full"
+                                        className="mt-4 rounded-full h-[80px] sm:h-[72px]"
                                     />
-                                    <p className="font-montserrat font-medium text-center"> {user.name} </p>
+                                    <p className="font-montserrat font-semibold text-center w-[80px] sm:w-[72px]"> {user.name} </p>
                                 </>
                             }
                         </div>
