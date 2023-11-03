@@ -1,14 +1,14 @@
-import Login from "./Login";
-import LoggedIn from "./LoggedIn";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../pages/api/auth/[...nextauth]";
-import Image from "next/image";
-import mobileLogo from "../images/TS_mobile_logo.svg";
-import desktopLogo from "../images/TS_desktop_logo.svg"
-import Link from "next/link";
+// import Login from "./Login";
+// import LoggedIn from "./LoggedIn";
+// import { getServerSession } from "next-auth/next";
+// import { authOptions } from "../../pages/api/auth/[...nextauth]";
+// import Image from "next/image";
+// import mobileLogo from "../images/TS_mobile_logo.svg";
+// import desktopLogo from "../images/TS_desktop_logo.svg"
+// import Link from "next/link";
 
 export default async function Nav() {
-    const session = await getServerSession(authOptions);
+    // const session = await getServerSession(authOptions);
 
     return (
         <nav className="flex py-3 px-6 lg:px-16 sm:mx-10 justify-between items-center">
@@ -27,10 +27,10 @@ export default async function Nav() {
                     />
                 </Link>
             </div> */}
-            <div>
+            {/* <div>
                 {!session?.user && <Login />}
                 {session?.user && <LoggedIn image={session.user?.image || ""} email={session.user.email || ""} />}
-            </div>
+            </div> */}
         </nav>
     )
 }
