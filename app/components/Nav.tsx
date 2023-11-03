@@ -12,7 +12,7 @@ export default async function Nav() {
 
     return (
         <nav className="flex py-3 px-6 lg:px-16 sm:mx-10 justify-between items-center">
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
                 <Link href={"/"}>
                     <Image
                         src={desktopLogo}
@@ -26,7 +26,7 @@ export default async function Nav() {
                         alt="Mobile logo..."
                     />
                 </Link>
-            </div>
+            </div> */}
             <div>
                 {!session?.user && <Login />}
                 {session?.user && <LoggedIn image={session.user?.image || ""} email={session.user.email || ""} />}
