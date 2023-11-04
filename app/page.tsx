@@ -204,7 +204,10 @@ export default function Home() {
                     Sign Up to Post a Story Today!
                   </div>
                   <div className="flex justify-center">
-                    <button className="font-montserrat px-2 py-1 rounded-full bg-dark-orange font-light text-off-white mb-6">
+                    <button
+                      className="font-montserrat px-2 py-1 rounded-full bg-dark-orange font-light text-off-white mb-6"
+                      onClick={() => signIn('google', { redirect: true })}
+                    >
                       SIGN UP
                     </button>
                   </div>
