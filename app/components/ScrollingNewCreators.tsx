@@ -26,7 +26,7 @@ export default function ScrollingNewCreators({ sessionUser }: Props) {
         <div className="sm:border sm:rounded-3xl p-2 sm:w-80 overflow-x-auto sm:no-scrollbar">
             <h1 className="font-montserrat mb-2 text-3xl font-semibold sm:text-2xl"> New Creators </h1>
             <div className="flex gap-6">
-                {data?.splice(0, 5).map((user) => (
+                {data?.map((user) => (
                     <>
                         <div className="flex-col justify-center">
                             {sessionUser ?
