@@ -116,7 +116,7 @@ export default function Home() {
       </div>
       <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
         <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
-          <div className="border rounded-3xl pl-2">
+          <div className="border rounded-3xl shadow pl-2">
             <SideBarPosts
               sessionUser={sessionUser}
             />
@@ -221,7 +221,7 @@ export default function Home() {
           {!sessionUserLoading &&
             <>
               {!sessionUser ?
-                <div className="flex items-center justify-center border rounded-3xl pl-2 mt-4 h-32">
+                <div className="flex items-center justify-center border shadow rounded-3xl pl-2 mt-4 h-32">
                   <div className="flex flex-col items-center">
                     <div className="font-montserrat text-center mb-2">
                       Sign Up to Post a Story Today!
@@ -237,7 +237,7 @@ export default function Home() {
                 :
                 <>
                   {sessionUser.posts.length > 0 &&
-                    <div className="border rounded-3xl pl-2 mt-4">
+                    <div className="border shadow rounded-3xl pl-2 mt-4">
                       <h1 className="text-2xl font-extrabold mt-2 ml-1 font-montserrat">
                         My Stories
                       </h1>

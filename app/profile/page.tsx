@@ -36,7 +36,7 @@ export default function MyProfilePage() {
             </div>
             <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
                 <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
-                    <div className="border rounded-3xl pl-2">
+                    <div className="border shadow rounded-3xl pl-2">
                         <SideBarPosts
                             sessionUser={sessionUser}
                         />
