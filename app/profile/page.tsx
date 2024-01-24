@@ -8,6 +8,7 @@ import { SessionUser } from "../types/SessionUser";
 import MyPost from "./MyPost";
 import SideBarPosts from "../components/SideBarPosts";
 import ScrollingNewCreators from "../components/ScrollingNewCreators";
+import { Skeleton } from "antd";
 
 const fetchSessionUser = async () => {
     const res = await axios.get("/api/auth/getSessionUser");
@@ -73,17 +74,27 @@ export default function MyProfilePage() {
                         </div>
                     </div>
                     <div>
-                        {sessionUser?.posts.map((post) => (
-                            <MyPost
-                                id={post.id}
-                                avatar={sessionUser.image}
-                                name={sessionUser.name}
-                                title={post.title}
-                                content={post.content}
-                                comments={post.comments}
-                                likes={post.likes}
-                            />
-                        ))}
+                        {!isLoading ?
+                            sessionUser?.posts.map((post) => (
+                                <MyPost
+                                    id={post.id}
+                                    avatar={sessionUser.image}
+                                    name={sessionUser.name}
+                                    title={post.title}
+                                    content={post.content}
+                                    comments={post.comments}
+                                    likes={post.likes}
+                                />
+                            ))
+                            :
+                            <>
+                                <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                                <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                                <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                                <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                                <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            </>
+                        }
                     </div>
                 </div>
                 <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">

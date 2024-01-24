@@ -8,6 +8,7 @@ import { SessionUser } from "@/app/types/SessionUser";
 import { User } from "@/app/types/User";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Skeleton } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -79,52 +80,66 @@ export default function ProfilePage(url: URL) {
                     </div>
                 </div>
                 <div className="sm:w-2/5 2xl:w-1/3 sm:mx-8">
-                    <div className="mt-2 ml-4 font-extrabold text-2xl sm:hidden font-verdana">
-                        {data?.name.toUpperCase()}'S STORIES
-                    </div>
-                    <div className="sm:flex gap-2 hidden">
-                        <button onClick={() => router.back()}>
-                            <ArrowLeftOutlined className="ml-2 text-lg" />
-                        </button>
-                        <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block font-verdana">
-                            {data?.name.toUpperCase()}'S STORIES
-                        </h1>
-                    </div>
-                    <div className="flex gap-10 font-montserrat">
-                        <div className="flex flex-col items-center ml-6 font-semibold">
-                            <div className="pt-3 text-lg">
-                                {data?.posts.length}
+                    {!isLoading && data ?
+                        <>
+                            <div className="mt-2 ml-4 font-extrabold text-2xl sm:hidden font-verdana">
+                                {data.name.toUpperCase()}'S STORIES
                             </div>
-                            <div>
-                                Posts
+                            <div className="sm:flex gap-2 hidden">
+                                <button onClick={() => router.back()}>
+                                    <ArrowLeftOutlined className="ml-2 text-lg" />
+                                </button>
+                                <h1 className="text-2xl font-extrabold cursor-pointer hidden sm:block font-verdana">
+                                    {data.name.toUpperCase()}'S STORIES
+                                </h1>
                             </div>
-                        </div>
-                        <div className="flex flex-col items-center font-semibold">
-                            <div className="pt-3 text-lg">
-                                {data?.followers.length}
+
+
+                            <div className="flex gap-10 font-montserrat">
+                                <div className="flex flex-col items-center ml-6 font-semibold">
+                                    <div className="pt-3 text-lg">
+                                        {data.posts.length}
+                                    </div>
+                                    <div>
+                                        Posts
+                                    </div>
+                                </div>
+                                <div className="flex flex-col items-center font-semibold">
+                                    <div className="pt-3 text-lg">
+                                        {data.followers.length}
+                                    </div>
+                                    <div>
+                                        Followers
+                                    </div>
+                                </div>
+                                <div className="flex items-center">
+                                    <button onClick={() => mutate()} className={`rounded-full py-[3px] px-4 border border-black ${userFollowedBySessionUser ? "bg-off-white text-black" : "bg-blue-500 text-off-white"}`}>
+                                        {userFollowedBySessionUser ? <p> Unfollow </p> : <p> Follow </p>}
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                Followers
-                            </div>
-                        </div>
-                        <div className="flex items-center">
-                            <button onClick={() => mutate()} className={`rounded-full py-[3px] px-4 border border-black ${userFollowedBySessionUser ? "bg-off-white text-black" : "bg-blue-500 text-off-white"}`}>
-                                {userFollowedBySessionUser ? <p> Unfollow </p> : <p> Follow </p>}
-                            </button>
-                        </div>
-                    </div>
-                    {data?.posts?.map((post) => (
-                        <Post
-                            id={post.id}
-                            name={post.user.name}
-                            avatar={post.user.image}
-                            title={post.title}
-                            content={post.content}
-                            comments={post.comments}
-                            likes={post.likes}
-                            creatorId={post.user.id}
-                        />
-                    ))}
+                            {data.posts?.map((post) => (
+                                <Post
+                                    id={post.id}
+                                    name={post.user.name}
+                                    avatar={post.user.image}
+                                    title={post.title}
+                                    content={post.content}
+                                    comments={post.comments}
+                                    likes={post.likes}
+                                    creatorId={post.user.id}
+                                />
+                            ))}
+                        </>
+                        :
+                        <>
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                        </>
+                    }
                 </div>
                 <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
                     <ScrollingNewCreators sessionUser={sessionUser} />

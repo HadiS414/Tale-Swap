@@ -8,7 +8,7 @@ import Image from "next/image";
 import { ArrowLeftOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import AddComment from "@/app/components/AddComment";
-import { Dropdown } from "antd";
+import { Dropdown, Skeleton } from "antd";
 import { SessionUser } from "@/app/types/SessionUser";
 import { useState } from "react";
 import SideBarPosts from "@/app/components/SideBarPosts";
@@ -101,47 +101,51 @@ export default function PostDetails(url: URL) {
                             VIEW STORY
                         </h1>
                     </div>
-                    {data &&
-                        <Post
-                            id={data.id}
-                            name={data.user.name}
-                            avatar={data.user.image}
-                            title={data.title}
-                            content={data.content}
-                            comments={data.comments}
-                            likes={data.likes}
-                            creatorId={data.user.id}
-                        />
-                    }
-                    {data?.comments?.map((comment) => (
-                        <div key={comment.id} className="font-montserrat mx-6 sm:ml-0 sm:mr-2 sm:mt-1 border-b-2">
-                            <div className="flex items-center gap-2">
-                                <Image
-                                    className="rounded-full"
-                                    width={32}
-                                    height={32}
-                                    src={comment.user?.image}
-                                    alt="Avatar..."
-                                />
-                                <h3 className="font-bold"> {comment?.user?.name} </h3>
-                            </div>
-                            <div className="py-2 flex items-center justify-between">
-                                <div>
-                                    {comment.content}
+                    {(!isLoading && data) ?
+                        <div>
+                            <Post
+                                id={data.id}
+                                name={data.user.name}
+                                avatar={data.user.image}
+                                title={data.title}
+                                content={data.content}
+                                comments={data.comments}
+                                likes={data.likes}
+                                creatorId={data.user.id}
+                            />
+                            {data?.comments?.map((comment) => (
+                                <div key={comment.id} className="font-montserrat mx-6 sm:ml-0 sm:mr-2 sm:mt-1 border-b-2">
+                                    <div className="flex items-center gap-2">
+                                        <Image
+                                            className="rounded-full"
+                                            width={32}
+                                            height={32}
+                                            src={comment.user?.image}
+                                            alt="Avatar..."
+                                        />
+                                        <h3 className="font-bold"> {comment?.user?.name} </h3>
+                                    </div>
+                                    <div className="py-2 flex items-center justify-between">
+                                        <div>
+                                            {comment.content}
+                                        </div>
+                                        <div>
+                                            {(data.user.id === sessionUser?.id || comment.userId === sessionUser?.id) &&
+                                                <Dropdown menu={{ items }} onOpenChange={() => setSelectedComment(comment.id)}>
+                                                    <EllipsisOutlined />
+                                                </Dropdown>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    {(data.user.id === sessionUser?.id || comment.userId === sessionUser?.id) &&
-                                        <Dropdown menu={{ items }} onOpenChange={() => setSelectedComment(comment.id)}>
-                                            <EllipsisOutlined />
-                                        </Dropdown>
-                                    }
-                                </div>
+                            ))}
+                            <div className="sticky bottom-0">
+                                <AddComment id={data?.id} />
                             </div>
                         </div>
-                    ))}
-                    <div className="sticky bottom-0">
-                        <AddComment id={data?.id} />
-                    </div>
+                        :
+                        <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 6 }} />
+                    }
                 </div>
                 <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
                     <ScrollingNewCreators sessionUser={sessionUser} />

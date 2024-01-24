@@ -9,6 +9,7 @@ import heartFilled from "../images/Heart_Filled.svg";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PostType } from "../types/Post";
+import { Skeleton } from "antd";
 
 type Props = {
     sessionUser?: SessionUser
@@ -41,7 +42,7 @@ export default function SideBarPosts({ sessionUser }: Props) {
             <h1 className="text-2xl font-bold mt-2 ml-1 font-montserrat">
                 Personal
             </h1>
-            {personalPosts &&
+            {(personalPosts && !personalLoading) ?
                 personalPosts?.slice(0, 2).map((post) => (
                     <Link href={`/post/${post.id}`}>
                         <div className="m-6 sm:ml-0">
@@ -105,11 +106,17 @@ export default function SideBarPosts({ sessionUser }: Props) {
                             </div>
                         </div>
                     </Link>
-                ))}
+                ))
+                :
+                <>
+                    <Skeleton className="mt-2 pr-4" active avatar paragraph={{ rows: 4 }} />
+                    <Skeleton className="mt-2 pr-4" active avatar paragraph={{ rows: 4 }} />
+                </>
+            }
             <h1 className="text-2xl font-bold mt-2 ml-1 font-montserrat">
                 Misc
             </h1>
-            {miscPosts &&
+            {(miscPosts && !miscLoading) ?
                 miscPosts?.slice(0, 1).map((post) => (
                     <Link href={`/post/${post.id}`}>
                         <div className="m-6 sm:ml-0">
@@ -173,7 +180,10 @@ export default function SideBarPosts({ sessionUser }: Props) {
                             </div>
                         </div>
                     </Link>
-                ))}
+                ))
+                :
+                <Skeleton className="mt-2 pr-4 pb-4" active avatar paragraph={{ rows: 4 }} />
+            }
         </div>
     )
 }

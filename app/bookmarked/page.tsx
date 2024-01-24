@@ -9,6 +9,7 @@ import Post from "../components/Post";
 import SideBarPosts from "../components/SideBarPosts";
 import ScrollingNewCreators from "../components/ScrollingNewCreators";
 import SideBarMyPost from "../components/SideBarMyPost";
+import { Skeleton } from "antd";
 
 const fetchSessionUser = async () => {
     const res = await axios.get("/api/auth/getSessionUser");
@@ -52,18 +53,28 @@ export default function BookMarkedPage() {
                             BOOKMARKED
                         </h1>
                     </div>
-                    {sessionUser?.savedPosts?.map((post) => (
-                        <Post
-                            id={post.post.id}
-                            name={post.post.user.name}
-                            avatar={post.post.user.image}
-                            title={post.post.title}
-                            content={post.post.content}
-                            comments={post.post.comments}
-                            likes={post.post.likes}
-                            creatorId={post.post.user.id}
-                        />
-                    ))}
+                    {!isLoading ?
+                        sessionUser?.savedPosts?.map((post) => (
+                            <Post
+                                id={post.post.id}
+                                name={post.post.user.name}
+                                avatar={post.post.user.image}
+                                title={post.post.title}
+                                content={post.post.content}
+                                comments={post.post.comments}
+                                likes={post.post.likes}
+                                creatorId={post.post.user.id}
+                            />
+                        ))
+                        :
+                        <>
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                            <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+                        </>
+                    }
                 </div>
                 <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
                     <ScrollingNewCreators sessionUser={sessionUser} />

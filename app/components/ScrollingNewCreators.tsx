@@ -6,6 +6,7 @@ import Image from "next/image";
 import { User } from "../types/User";
 import Link from "next/link";
 import { SessionUser } from "../types/SessionUser";
+import { Skeleton } from "antd";
 
 type Props = {
     sessionUser: SessionUser | undefined
@@ -28,7 +29,7 @@ export default function ScrollingNewCreators({ sessionUser }: Props) {
         <div className="sm:border sm:shadow sm:rounded-3xl p-2 sm:w-80 overflow-x-auto sm:no-scrollbar">
             <h1 className="font-montserrat mb-2 text-3xl font-semibold sm:text-2xl"> New Creators </h1>
             <div className="flex gap-6">
-                {data?.slice(0, 3).map((user) => (
+                {(data && !isLoading) ? data.slice(0, 3).map((user) => (
                     <>
                         <div className="flex-col justify-center">
                             {sessionUser ?
@@ -56,7 +57,10 @@ export default function ScrollingNewCreators({ sessionUser }: Props) {
                             }
                         </div>
                     </>
-                ))}
+                ))
+                    :
+                    <Skeleton className="mt-2 px-2" active paragraph={{ rows: 4 }} />
+                }
             </div>
         </div>
     )

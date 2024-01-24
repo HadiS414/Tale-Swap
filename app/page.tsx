@@ -3,6 +3,7 @@
 import CreatePost from "./components/CreatePost"
 import Post from "./components/Post";
 import axios from "axios";
+import { Skeleton } from "antd";
 import { signIn } from 'next-auth/react';
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PostType } from "./types/Post";
@@ -49,7 +50,7 @@ export default function Home() {
     queryFn: fetchSessionUser,
     queryKey: ["sessionUser"]
   });
-  const { data, isLoading } = useQuery<PostType[]>({
+  const { data, isLoading: isPostsLoading } = useQuery<PostType[]>({
     queryFn: fetchAllPosts,
     queryKey: ["posts"]
   })
@@ -152,18 +153,28 @@ export default function Home() {
               <CreatePost />
             </div>
           }
-          {data?.map((post) => (
-            <Post
-              id={post.id}
-              name={post.user.name}
-              avatar={post.user.image}
-              title={post.title}
-              content={post.content}
-              comments={post.comments}
-              likes={post.likes}
-              creatorId={post.user.id}
-            />
-          ))}
+          {!isPostsLoading ?
+            data?.map((post) => (
+              <Post
+                id={post.id}
+                name={post.user.name}
+                avatar={post.user.image}
+                title={post.title}
+                content={post.content}
+                comments={post.comments}
+                likes={post.likes}
+                creatorId={post.user.id}
+              />
+            ))
+            :
+            <>
+              <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+              <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+              <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+              <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+              <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 4 }} />
+            </>
+          }
           {sessionUser &&
             <Link
               href={'/createPost'}
