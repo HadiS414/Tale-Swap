@@ -11,7 +11,7 @@ export default async function Nav() {
     const session = await getServerSession(authOptions);
 
     return (
-        <nav className="flex py-3 px-6 lg:px-16 sm:mx-10 justify-between items-center">
+        <nav className="flex py-3 px-6 lg:px-16 justify-between items-center sticky top-0 bg-off-white z-10">
             <div className="flex gap-2">
                 <Link href={"/"}>
                     <Image

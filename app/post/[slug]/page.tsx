@@ -14,6 +14,7 @@ import { useState } from "react";
 import SideBarPosts from "@/app/components/SideBarPosts";
 import ScrollingNewCreators from "@/app/components/ScrollingNewCreators";
 import SideBarMyPost from "@/app/components/SideBarMyPost";
+import type { MenuProps } from 'antd';
 
 type URL = {
     params: {
@@ -61,11 +62,12 @@ export default function PostDetails(url: URL) {
         }
     )
 
-    const items = [
+    const items: MenuProps['items'] = [
         {
             key: 'delete',
+            onClick: () => mutate(selectedComment),
             label: (
-                <button className="text-red-600 font-bold font-montserrat" onClick={() => mutate(selectedComment)}>
+                <button className="text-red-600 font-bold font-montserrat">
                     Delete
                 </button>
             ),

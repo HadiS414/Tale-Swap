@@ -8,6 +8,9 @@ export default async function handler(
     if (req.method === "GET") {
         try {
             const newUsers = await prisma.user.findMany({
+                orderBy : {
+                    emailVerified: "desc"
+                },
                 include: {
                     posts: {
                         orderBy: {

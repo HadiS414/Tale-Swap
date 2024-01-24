@@ -78,7 +78,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
     const postSavedByUser = sessionUser?.savedPosts?.find((post) => post.post.id === id);
 
     return (
-        <div className="m-6 border-b border-black sm:ml-0">
+        <div className="m-6 sm:ml-0">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <button onClick={() => mutate("save")} disabled={!sessionUser}>
@@ -130,13 +130,27 @@ export default function Post({ id, name, avatar, title, content, comments, likes
             </div>
             <div className="sm:hidden">
                 {sessionUser ?
-                    <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`}>
-                        <p className="font-montserrat">
-                            By: {name}
-                        </p>
+                    <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`} className="flex items-center gap-2 mt-1">
+                        <Image
+                            className="rounded-full"
+                            width={24}
+                            height={24}
+                            src={avatar}
+                            alt="Avatar..."
+                        />
+                        <p className="font-montserrat text-base font-normal"> {name} </p>
                     </Link>
                     :
-                    <p className="font-montserrat"> By: {name} </p>
+                    <div className="flex items-center gap-1">
+                        <Image
+                            className="rounded-full"
+                            width={24}
+                            height={24}
+                            src={avatar}
+                            alt="Avatar..."
+                        />
+                        <p className="font-montserrat text-base font-normal"> {name} </p>
+                    </div>
                 }
             </div>
             <div className="my-4">

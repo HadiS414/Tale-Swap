@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Dropdown } from "antd";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import type { MenuProps } from 'antd';
 
 type Props = {
     image: string,
@@ -11,7 +12,7 @@ type Props = {
 }
 
 export default function LoggedIn({ image, email }: Props) {
-    const items = [
+    const items: MenuProps['items'] = [
         {
             key: '1',
             label: (
@@ -49,8 +50,9 @@ export default function LoggedIn({ image, email }: Props) {
         },
         {
             key: '4',
+            onClick: () => signOut(),
             label: (
-                <button className="font-montserrat text-red-600 font-bold" onClick={() => signOut()}>
+                <button className="font-montserrat text-red-600 font-bold">
                     Log out
                 </button>
             ),

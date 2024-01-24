@@ -1,16 +1,18 @@
 "use client"
 
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import DeletePostModal from "./DeletePostModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { CloseOutlined } from "@ant-design/icons";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { SessionUser } from "../types/SessionUser";
 import Link from "next/link";
 import commentBubble from "../images/CommentBubble.svg";
 import heart from "../images/Heart.svg";
 import heartFilled from "../images/Heart_Filled.svg";
+import { Dropdown } from "antd";
+import type { MenuProps } from 'antd';
 
 type MyPostProps = {
     id: string
@@ -45,7 +47,6 @@ const fetchSessionUser = async () => {
 
 export default function MyPost({ id, name, title, content, comments, likes }: MyPostProps) {
     const [seeMore, setSeeMore] = useState(false);
-    const [showDeleteButton, setShowDeleteButton] = useState(false);
     const [showDeletePostModal, setShowDeletePostModal] = useState(false);
     const queryClient = useQueryClient();
     const { data } = useQuery<SessionUser>({
@@ -53,21 +54,18 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
         queryKey: ["sessionUser"]
     });
     const sessionUser = { ...data };
-    const deleteButtonRef = useRef<HTMLDivElement | null>(null);
 
-    const handleClickOutside = (event: MouseEvent) => {
-        const target = event.target as Node;
-        if (deleteButtonRef.current && !deleteButtonRef.current.contains(target)) {
-            setShowDeleteButton(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            onClick: () => setShowDeletePostModal(true),
+            label: (
+                <p className="text-red-600 font-medium">
+                    Delete
+                </p>
+            ),
+        },
+    ];
 
     const { mutate } = useMutation(
         async () => await axios.post("/api/posts/likePost", { postId: id }),
@@ -84,21 +82,15 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
     const postLikedBySessionUser = likes.find((like) => like.userId === sessionUser.id);
 
     return (
-        <div className="m-6 border-b border-black font-montserrat">
+        <div className="m-6 font-montserrat">
             <div className="flex justify-between">
                 <p className="font-semibold text-xl">
                     {title}
                 </p>
                 <div className="cursor-pointer">
-                    {showDeleteButton ?
-                        <div ref={deleteButtonRef}>
-                            <button className="bg-red-500 rounded-full px-2 py-1 text-off-white font-thin" onClick={() => setShowDeletePostModal(true)}>
-                                Delete
-                            </button>
-                        </div>
-                        :
-                        <CloseOutlined onClick={() => setShowDeleteButton(true)} />
-                    }
+                    <Dropdown menu={{ items }}>
+                        <EllipsisOutlined className="flex text-2xl" />
+                    </Dropdown>
                 </div>
             </div>
             <div className="my-4">
