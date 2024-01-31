@@ -113,7 +113,7 @@ export default function ProfilePage(url: URL) {
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    <button onClick={() => mutate()} className={`rounded-full py-[3px] px-4 border border-black ${userFollowedBySessionUser ? "bg-off-white text-black" : "bg-blue-500 text-off-white"}`}>
+                                    <button onClick={() => mutate()} className={`rounded-full py-[3px] px-4 border border-black transition-opacity duration-500 hover:opacity-50 ${userFollowedBySessionUser ? "bg-off-white text-black" : "bg-blue-500 text-off-white"}`}>
                                         {userFollowedBySessionUser ? <p> Unfollow </p> : <p> Follow </p>}
                                     </button>
                                 </div>

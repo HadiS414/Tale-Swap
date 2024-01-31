@@ -97,7 +97,7 @@ export default function CreatePost() {
             {contextHolder}
             <div className="bg-white rounded-md">
                 {!showEdit ?
-                    <div className="flex flex-col relative mt-4 mb-8" onClick={() => setShowEdit(true)}>
+                    <div className="flex flex-col relative mt-4 mb-8 cursor-pointer transition-opacity duration-300 hover:opacity-40" onClick={() => setShowEdit(true)}>
                         <div className="w-full h-12 px-3 py-2 text-lg text-black font-light font-montserrat rounded-full border-black border-2">
                             Write a Post
                         </div>

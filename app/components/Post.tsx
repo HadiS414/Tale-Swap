@@ -88,6 +88,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                                 height={24}
                                 src={saveButtonFilled}
                                 alt="Bookmark..."
+                                className={`${sessionUser && "transition-opacity duration-500 hover:opacity-50"}`}
                             />
                             :
                             <Image
@@ -95,6 +96,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                                 height={24}
                                 src={saveButton}
                                 alt="Bookmark..."
+                                className={`${sessionUser && "transition-opacity duration-500 hover:opacity-50"}`}
                             />
                         }
                     </button>
@@ -104,7 +106,7 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                 </div>
                 <div className="hidden sm:block">
                     {sessionUser ?
-                        <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`} className="flex items-center gap-1">
+                        <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`} className="flex items-center gap-1 transition-opacity duration-500 hover:opacity-60">
                             <Image
                                 className="rounded-full"
                                 width={18}
@@ -128,30 +130,17 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                     }
                 </div>
             </div>
-            <div className="sm:hidden">
-                {sessionUser ?
-                    <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`} className="flex items-center gap-2 mt-1">
-                        <Image
-                            className="rounded-full"
-                            width={24}
-                            height={24}
-                            src={avatar}
-                            alt="Avatar..."
-                        />
-                        <p className="font-montserrat text-base font-normal"> {name} </p>
-                    </Link>
-                    :
-                    <div className="flex items-center gap-1">
-                        <Image
-                            className="rounded-full"
-                            width={24}
-                            height={24}
-                            src={avatar}
-                            alt="Avatar..."
-                        />
-                        <p className="font-montserrat text-base font-normal"> {name} </p>
-                    </div>
-                }
+            <div className="sm:hidden mt-2">
+                <Link href={creatorId === sessionUser?.id ? '/profile' : `/profile/${creatorId}`} className={`flex items-center gap-2 mt-1 ${!sessionUser && "cursor-none pointer-events-none"}`}>
+                    <Image
+                        className="rounded-full"
+                        width={24}
+                        height={24}
+                        src={avatar}
+                        alt="Avatar..."
+                    />
+                    <p className="font-montserrat text-base font-normal"> {name} </p>
+                </Link>
             </div>
             <div className="my-4">
                 <p className="font-montserrat break-normal hidden sm:block"> {seeMore ? content : content.substring(0, 450)} </p>
@@ -164,15 +153,16 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                         <button onClick={() => mutate("like")} disabled={!sessionUser}>
                             {postLikedBySessionUser ?
                                 <Image
-                                    className="text-blue-500"
+                                    className={`text-blue-500 ${sessionUser && "transition-opacity duration-500 hover:opacity-50"}`}
                                     width={24}
                                     height={24}
                                     src={heartFilled}
                                     alt="Heart..."
+
                                 />
                                 :
                                 <Image
-                                    className="text-blue-500"
+                                    className={`text-blue-500 ${sessionUser && "transition-opacity duration-500 hover:opacity-50"}`}
                                     width={24}
                                     height={24}
                                     src={heart}
@@ -183,29 +173,21 @@ export default function Post({ id, name, avatar, title, content, comments, likes
                     </div>
                     <div className="flex gap-1 items-center">
                         {comments?.length}
-                        {sessionUser ?
-                            <Link href={`/post/${id}`}>
-                                <Image
-                                    width={24}
-                                    height={24}
-                                    src={commentBubble}
-                                    alt="Comment Bubble..."
-                                />
-                            </Link>
-                            :
+                        <Link href={`/post/${id}`} className={`${!sessionUser && "cursor-none pointer-events-none"}`}>
                             <Image
                                 width={24}
                                 height={24}
                                 src={commentBubble}
                                 alt="Comment Bubble..."
+                                className="transition-opacity duration-500 hover:opacity-50"
                             />
-                        }
+                        </Link>
                     </div>
                 </div>
                 <div>
                     {content.length > 400 &&
                         <button onClick={() => setSeeMore(!seeMore)}>
-                            <p className="font-montserrat font-medium">
+                            <p className="font-montserrat font-medium transition-opacity duration-500 hover:opacity-50">
                                 {seeMore ? "See Less" : "See More"}
                             </p>
                         </button>

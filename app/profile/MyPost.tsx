@@ -103,7 +103,7 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
                         <button onClick={() => mutate()}>
                             {postLikedBySessionUser ?
                                 <Image
-                                    className="text-blue-500"
+                                    className="text-blue-500 transition-opacity duration-500 hover:opacity-50"
                                     width={24}
                                     height={24}
                                     src={heartFilled}
@@ -111,7 +111,7 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
                                 />
                                 :
                                 <Image
-                                    className="text-blue-500"
+                                    className="text-blue-500 transition-opacity duration-500 hover:opacity-50"
                                     width={24}
                                     height={24}
                                     src={heart}
@@ -128,6 +128,7 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
                                 height={24}
                                 src={commentBubble}
                                 alt="Comment Bubble..."
+                                className="transition-opacity duration-500 hover:opacity-50"
                             />
                         </Link>
                     </div>
@@ -135,7 +136,7 @@ export default function MyPost({ id, name, title, content, comments, likes }: My
                 <div>
                     {content.length > 400 &&
                         <button onClick={() => setSeeMore(!seeMore)}>
-                            <p className="font-medium">
+                            <p className="font-medium transition-opacity duration-500 hover:opacity-50">
                                 {seeMore ? "See Less" : "See More"}
                             </p>
                         </button>

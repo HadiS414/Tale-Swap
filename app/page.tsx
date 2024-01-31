@@ -139,7 +139,7 @@ export default function Home() {
                 {buttons.map((button, index) => (
                   <button
                     key={index}
-                    className={`font-montserrat rounded-full px-3 py-[2px] sm:py-[1px] mt-3 border border-black ${button.active ? "bg-blue-500 text-off-white" : "bg-off-white"}`}
+                    className={`font-montserrat rounded-full px-3 py-[2px] sm:py-[1px] mt-3 border border-black transition-opacity duration-500 ${button.active ? "bg-blue-500 text-off-white hover:opacity-60" : "bg-off-white hover:opacity-40"}`}
                     onClick={button.action}
                   >
                     {button.label}

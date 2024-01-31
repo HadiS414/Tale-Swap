@@ -44,7 +44,7 @@ export default function SideBarPosts({ sessionUser }: Props) {
             </h1>
             {(personalPosts && !personalLoading) ?
                 personalPosts?.slice(0, 2).map((post) => (
-                    <Link href={`/post/${post.id}`}>
+                    <Link href={`/post/${post.id}`} className={`${!sessionUser && "cursor-none pointer-events-none"}`}>
                         <div className="m-6 sm:ml-0">
                             <div className="flex gap-2 justify-between">
                                 <p className="font-montserrat font-semibold text-md">
@@ -118,7 +118,7 @@ export default function SideBarPosts({ sessionUser }: Props) {
             </h1>
             {(miscPosts && !miscLoading) ?
                 miscPosts?.slice(0, 1).map((post) => (
-                    <Link href={`/post/${post.id}`}>
+                    <Link href={`/post/${post.id}`} className={`${!sessionUser && "cursor-none pointer-events-none"}`}>
                         <div className="m-6 sm:ml-0">
                             <div className="flex gap-2 justify-between">
                                 <p className="font-montserrat font-semibold text-md">
