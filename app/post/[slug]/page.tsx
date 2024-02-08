@@ -86,7 +86,7 @@ export default function PostDetails(url: URL) {
             </div>
             <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
                 <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
-                    <div className="border shadow rounded-3xl pl-2">
+                    <div className="border shadow rounded-3xl pl-2 2xl:sticky 2xl:top-32">
                         <SideBarPosts
                             sessionUser={sessionUser}
                         />
@@ -147,15 +147,17 @@ export default function PostDetails(url: URL) {
                         <Skeleton className="mt-2 px-2" active avatar paragraph={{ rows: 6 }} />
                     }
                 </div>
-                <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
-                    <ScrollingNewCreators sessionUser={sessionUser} />
-                    <div className="border shadow rounded-3xl pl-2 mt-4">
-                        <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
-                            My Stories
-                        </h1>
-                        <SideBarMyPost
-                            sessionUser={sessionUser}
-                        />
+                <div className="hidden sm:block sm:w-80 mt-6 sticky right-16">
+                    <div className="2xl:sticky 2xl:top-32">
+                        <ScrollingNewCreators sessionUser={sessionUser} />
+                        <div className="border shadow rounded-3xl pl-2 mt-4">
+                            <h1 className="font-montserrat text-2xl font-bold mt-2 ml-1">
+                                My Stories
+                            </h1>
+                            <SideBarMyPost
+                                sessionUser={sessionUser}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

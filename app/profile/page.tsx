@@ -37,7 +37,7 @@ export default function MyProfilePage() {
             </div>
             <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
                 <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
-                    <div className="border shadow rounded-3xl pl-2">
+                    <div className="border shadow rounded-3xl pl-2 2xl:sticky 2xl:top-32">
                         <SideBarPosts
                             sessionUser={sessionUser}
                         />
@@ -97,8 +97,10 @@ export default function MyProfilePage() {
                         }
                     </div>
                 </div>
-                <div className="hidden sm:block sm:w-80 2xl:w-96 mt-6 sticky right-16">
-                    <ScrollingNewCreators sessionUser={sessionUser} />
+                <div className="hidden sm:block sm:w-80 mt-6">
+                    <div className="sticky top-32">
+                        <ScrollingNewCreators sessionUser={sessionUser} />
+                    </div>
                 </div>
             </div>
         </div>

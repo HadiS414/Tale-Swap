@@ -116,8 +116,8 @@ export default function Home() {
         </h1>
       </div>
       <div className="sm:flex sm:mt-8 sm:mx-12 sm:justify-center relative">
-        <div className="hidden sm:block sm:w-72 2xl:w-96 sticky">
-          <div className="border rounded-3xl shadow pl-2">
+        <div className="hidden sm:block sm:w-72 2xl:w-96">
+          <div className="border rounded-3xl shadow pl-2 2xl:sticky 2xl:top-32">
             <SideBarPosts
               sessionUser={sessionUser}
             />
@@ -227,40 +227,42 @@ export default function Home() {
             </div>
           }
         </div>
-        <div className="hidden sm:block w-80 mt-6 sticky right-16">
-          <ScrollingNewCreators sessionUser={sessionUser} />
-          {!sessionUserLoading &&
-            <>
-              {!sessionUser ?
-                <div className="flex items-center justify-center border shadow rounded-3xl pl-2 mt-4 h-32">
-                  <div className="flex flex-col items-center">
-                    <div className="font-montserrat text-center mb-2">
-                      Sign Up to Post a Story Today!
+        <div className="hidden sm:block w-80 mt-6">
+          <div className="2xl:sticky 2xl:top-32">
+            <ScrollingNewCreators sessionUser={sessionUser} />
+            {!sessionUserLoading &&
+              <>
+                {!sessionUser ?
+                  <div className="flex items-center justify-center border shadow rounded-3xl pl-2 mt-4 h-32">
+                    <div className="flex flex-col items-center">
+                      <div className="font-montserrat text-center mb-2">
+                        Sign Up to Post a Story Today!
+                      </div>
+                      <button
+                        className="font-montserrat px-2 py-1 rounded-full bg-blue-500 font-light text-off-white mb-2"
+                        onClick={() => signIn('google', { redirect: true })}
+                      >
+                        SIGN UP
+                      </button>
                     </div>
-                    <button
-                      className="font-montserrat px-2 py-1 rounded-full bg-blue-500 font-light text-off-white mb-2"
-                      onClick={() => signIn('google', { redirect: true })}
-                    >
-                      SIGN UP
-                    </button>
                   </div>
-                </div>
-                :
-                <>
-                  {sessionUser.posts.length > 0 &&
-                    <div className="border shadow rounded-3xl pl-2 mt-4">
-                      <h1 className="text-2xl font-extrabold mt-2 ml-1 font-montserrat">
-                        My Stories
-                      </h1>
-                      <SideBarMyPost
-                        sessionUser={sessionUser}
-                      />
-                    </div>
-                  }
-                </>
-              }
-            </>
-          }
+                  :
+                  <>
+                    {sessionUser.posts.length > 0 &&
+                      <div className="border shadow rounded-3xl pl-2 mt-4">
+                        <h1 className="text-2xl font-extrabold mt-2 ml-1 font-montserrat">
+                          My Stories
+                        </h1>
+                        <SideBarMyPost
+                          sessionUser={sessionUser}
+                        />
+                      </div>
+                    }
+                  </>
+                }
+              </>
+            }
+          </div>
         </div>
       </div>
     </div>
