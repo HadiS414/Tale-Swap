@@ -80,7 +80,7 @@ export default function AddComment({ id }: PostProps) {
                             value={content}
                             type="text"
                             placeholder="Comment"
-                            className="font-montserrat w-72 sm:w-96"
+                            className="font-montserrat w-72 sm:w-96 outline-none"
                         />
                     </div>
                     <div>

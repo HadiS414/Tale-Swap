@@ -118,7 +118,7 @@ export default function CreatePostPage() {
                     <div className="flex justify-between my-4 ml-6">
                         <input
                             placeholder="Title"
-                            className="text-2xl w-4/6 font-montserrat"
+                            className="text-2xl w-4/6 font-montserrat outline-none"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
@@ -142,7 +142,7 @@ export default function CreatePostPage() {
                     </div>
                     <textarea
                         placeholder="Enter your story here..."
-                        className="text-xl mx-6 my-4 w-96 font-montserrat"
+                        className="text-xl mx-6 my-4 w-96 font-montserrat outline-none"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         rows={20}

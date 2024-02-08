@@ -110,13 +110,13 @@ export default function CreatePost() {
                         <div className="font-montserrat w-full px-3 py-2 text-lg text-black rounded-3xl border-black border">
                             <input
                                 placeholder="Title"
-                                className="text-xl w-4/6 font-medium"
+                                className="text-xl w-4/6 font-medium outline-none"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                             />
                             <textarea
                                 placeholder="Enter your story here..."
-                                className="text-lg my-4 w-full"
+                                className="text-lg my-4 w-full outline-none"
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                                 rows={3}
