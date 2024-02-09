@@ -100,9 +100,9 @@ export default function CreatePost({ sessionUser }: Props) {
         <>
             {contextHolder}
             <div className="bg-off-white rounded-md">
-                {showTitle ?
-                    <>
-                        <div className="flex gap-2 mt-6 w-full">
+                <>
+                    <div className={`${!showTitle && "flex gap-2"} mt-6 w-full`}>
+                        <div className={`${showTitle && "flex gap-2"}`}>
                             <Image
                                 className="rounded-full"
                                 width={32}
@@ -110,25 +110,27 @@ export default function CreatePost({ sessionUser }: Props) {
                                 src={sessionUser ? sessionUser.image : ""}
                                 alt="Avatar..."
                             />
-                            <input
-                                placeholder="Title"
-                                className="text-xl w-4/6 font-semibold outline-none font-montserrat"
-                                value={title}
-                                onChange={(e) => {
-                                    setTitle(e.target.value)
-                                    if (!e.target.value && !content) {
-                                        setShowTitle(false);
-                                        setGenre("");
-                                        setIsPersonalActive(false);
-                                        setIsFunnyActive(false);
-                                        setIsMiscActive(false);
-                                    }
-                                }}
-                            />
+                            {showTitle &&
+                                <input
+                                    placeholder="Title"
+                                    className="text-xl w-4/6 font-semibold outline-none font-montserrat"
+                                    value={title}
+                                    onChange={(e) => {
+                                        setTitle(e.target.value)
+                                        if (!e.target.value && !content) {
+                                            setShowTitle(false);
+                                            setGenre("");
+                                            setIsPersonalActive(false);
+                                            setIsFunnyActive(false);
+                                            setIsMiscActive(false);
+                                        }
+                                    }}
+                                />
+                            }
                         </div>
                         <textarea
                             placeholder="What's your story?"
-                            className="text-lg outline-none mt-2 ml-10 w-11/12 font-light font-montserrat"
+                            className={`text-lg outline-none w-11/12 font-light font-montserrat ${showTitle ? "ml-10" : "mb-10"}`}
                             value={content}
                             onChange={(e) => {
                                 setContent(e.target.value);
@@ -142,22 +144,24 @@ export default function CreatePost({ sessionUser }: Props) {
                                     setIsMiscActive(false);
                                 }
                             }}
-                            rows={3}
+                            rows={showTitle ? 3 : 1}
                         />
-                        {title &&
-                            <div className="font-montserrat flex items-center gap-2 w-full mb-3 text-lg text-black">
-                                {buttons.map((button, index) => (
-                                    <button
-                                        key={index}
-                                        className={`rounded-full px-3 py-[1px] border border-black ${button.active ? "bg-blue-500 text-off-white" : "bg-off-white"}`}
-                                        onClick={button.action}
-                                    >
-                                        {button.label}
-                                    </button>
+                    </div>
+                    {title &&
+                        <div className="font-montserrat flex items-center gap-2 w-full mb-3 text-lg text-black">
+                            {buttons.map((button, index) => (
+                                <button
+                                    key={index}
+                                    className={`rounded-full px-3 py-[1px] border border-black ${button.active ? "bg-blue-500 text-off-white" : "bg-off-white"}`}
+                                    onClick={button.action}
+                                >
+                                    {button.label}
+                                </button>
 
-                                ))}
-                            </div>
-                        }
+                            ))}
+                        </div>
+                    }
+                    {showTitle &&
                         <button
                             className={`px-4 py-2 rounded-full my-1 w-20 items-centera font-montserrat ${title && content && genre ? "cursor-pointer bg-blue-500 text-off-white" : "bg-gray-200 "}`}
                             disabled={!title || !content || !genre || isDisabled}
@@ -165,34 +169,9 @@ export default function CreatePost({ sessionUser }: Props) {
                         >
                             Post
                         </button>
-                    </>
-                    :
-                    <div className="flex gap-2 mt-6 mb-12 w-full">
-                        <div>
-                            <Image
-                                className="rounded-full"
-                                width={32}
-                                height={32}
-                                src={sessionUser ? sessionUser.image : ""}
-                                alt="Avatar..."
-                            />
-                        </div>
-                        <div className="w-full">
-                            <input
-                                placeholder="What's your story?"
-                                className="text-lg w-full outline-none font-light font-montserrat"
-                                value={content}
-                                onChange={(e) => {
-                                    if (e.target.value) {
-                                        setShowTitle(true)
-                                    } else {
-                                        setShowTitle(false)
-                                    }
-                                }}
-                            />
-                        </div>
-                    </div>
-                }
+                    }
+                </>
+
             </div>
         </>
     )
