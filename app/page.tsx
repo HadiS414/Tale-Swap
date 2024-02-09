@@ -150,7 +150,7 @@ export default function Home() {
           }
           {sessionUser &&
             <div className="hidden sm:block">
-              <CreatePost />
+              <CreatePost sessionUser={sessionUser} />
             </div>
           }
           {!isPostsLoading ?
